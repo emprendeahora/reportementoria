@@ -280,6 +280,28 @@
                         <p class="text-gray-500 mt-1">Siga la estructura de 2 horas para garantizar la trazabilidad de la intervención.</p>
                     </div>
 
+                    <!-- NUEVA FASE 0: REGISTRO DE ASISTENCIA Y APROBACIÓN -->
+                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden border-l-4 border-l-green-500 mb-6">
+                        <div class="bg-green-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">0</div>
+                                <div>
+                                    <h4 class="font-bold text-green-900">REGISTRO DE ASISTENCIA Y APROBACIÓN - MENTORIAS RUTA C</h4>
+                                    <p class="text-xs text-green-700 font-medium">Punto Cero: Confirmación de inicio</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-sm text-gray-700 mb-3 font-medium">Estimado mentor, antes de dar paso a la mentoría, por favor envíe el siguiente enlace para que la unidad productiva diligencie su asistencia y aprobación:</p>
+                            <div class="flex items-center gap-2">
+                                <input type="text" readonly value="https://docs.google.com/forms/d/e/1FAIpQLScJ1WWoVEOCBxj4-Mo6MD6uqVkbsZELpZgsQj6JtEa7DJqGng/viewform" id="link-asistencia" class="flex-1 border border-gray-300 rounded-md p-2.5 text-sm text-gray-600 bg-gray-50 outline-none focus:border-green-500 transition-colors shadow-sm" />
+                                <button type="button" onclick="copyAttendanceLink()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-md text-sm font-semibold transition-colors shadow-sm flex items-center gap-2 whitespace-nowrap">
+                                    <i data-lucide="copy" class="w-4 h-4"></i> Copiar Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Fase 1: Identificación de la necesidad -->
                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
                         <div class="bg-blue-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
@@ -578,6 +600,18 @@
 
         function goToStep(stepNumber) {
             currentStep = stepNumber; renderSteps();
+        }
+
+        // --- Función para copiar el enlace de asistencia ---
+        function copyAttendanceLink() {
+            const linkInput = document.getElementById('link-asistencia');
+            // Selecciona el texto y lo copia (compatible con iframes/móviles)
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            
+            // Retroalimentación visual simple
+            alert('¡Enlace copiado al portapapeles!');
         }
 
         // --- LÓGICA: Tipos de Mentoría ---
