@@ -628,8 +628,8 @@
 
         // --- LÓGICA DE ENVÍO A GOOGLE APPS SCRIPT ---
         
-        // ¡LA NUEVA URL YA ESTÁ INTEGRADA AQUÍ!
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzmN1B3qy9ZQ5Y13Rs2Nh9Zze30aH1-j-G8facuxK_P-B-r9bYDMMb5mecm9YNqQEC/exec';
+        // ¡Se ha integrado la nueva URL de Google Apps Script!
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzGtDJOHNxDDomdbRMKqwW1sF49dJ0GEZ_iCPFLgk8Jv4Hx8armEDg8wnljuZMFTmI/exec';
 
         function getBase64(file) {
             return new Promise((resolve, reject) => {
@@ -647,7 +647,7 @@
             const btnSubmit = document.getElementById('btn-submit');
             
             if (!SCRIPT_URL) {
-                alert('Atención: La URL del Script no está definida.');
+                alert('Atención: La nueva URL del Script aún no está definida en el código HTML.');
                 return;
             }
 
