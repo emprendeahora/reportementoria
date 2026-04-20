@@ -1,772 +1,1209 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Actividad - Mentorías Ruta C</title>
-    
-    <!-- Google Fonts: Montserrat para identidad de marca -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Configuración de fuente base en Tailwind -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Empresarial — Mentorías Ruta C</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── VARIABLES DE DISEÑO ── */
+  :root {
+    --c-bg: #FFFFFF;
+    --c-paper: #FFFFFF;
+    --c-ink: #001E4C; /* Azul profundo */
+    --c-muted: #5C6A7A;
+    --c-accent: #0056B3; /* Azul primario vibrante */
+    --c-accent-hover: #003D82;
+    --c-accent2: #00A3E0; /* Cyan/Celeste */
+    --c-accent3: #FFC72C; /* Amarillo/Dorado */
+    --c-border: #E1E8ED;
+    --c-tag-bg: #EAF2FB;
+    --radius: 8px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(0, 86, 179, 0.08);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        body { font-family: 'Montserrat', sans-serif; }
-        .animation-fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .toolbar-btn {
-            padding: 0.375rem;
-            border-radius: 0.25rem;
-            transition: background-color 0.2s;
-        }
-        .toolbar-btn:hover { background-color: #f3f4f6; }
-    </style>
+  /* ── RESET BÁSICO ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--c-bg);
+    color: var(--c-ink);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  button { font-family: inherit; }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--c-ink);
+    color: var(--c-paper);
+    padding: 16px 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid var(--c-accent2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .site-header .logos-wrap {
+    display: flex;
+    align-items: center;
+  }
+  .site-header .logo-img {
+    height: 45px;
+    width: auto;
+  }
+  .site-header .operator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    color: #A0B0C4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  .site-header .operator-img {
+    height: 36px;
+    border-radius: 4px;
+    background: white;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--c-bg);
+    color: var(--c-ink);
+    padding: 80px 5vw 60px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .hero::before {
+    content: 'C';
+    position: absolute;
+    right: -5%; top: -20%;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(300px, 40vw, 500px);
+    font-weight: 800;
+    color: rgba(0, 30, 76, 0.03);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-inner { max-width: 760px; position: relative; z-index: 2; margin: 0 auto; text-align: center; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--c-accent2); margin-bottom: 24px; font-weight: 800;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: normal; color: var(--c-accent); }
+  .hero p { font-size: 18px; color: var(--c-muted); font-weight: 400; margin: 0 auto; max-width: 600px; }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap {
+    background: var(--c-paper);
+    border-bottom: 1px solid var(--c-border);
+    padding: 16px 5vw;
+    display: flex; align-items: center; gap: 20px;
+    position: sticky;
+    top: 76px;
+    z-index: 99;
+    box-shadow: var(--shadow-sm);
+  }
+  .progress-steps { display: flex; gap: 8px; flex: 1; max-width: 800px; margin: 0 auto; }
+  .progress-step {
+    flex: 1; height: 6px; background: var(--c-border); border-radius: 3px;
+    transition: var(--transition);
+  }
+  .progress-step.active { background: var(--c-accent); }
+  .progress-step.done { background: var(--c-accent2); }
+  .progress-label { font-size: 13px; color: var(--c-muted); white-space: nowrap; font-weight: 600;}
+
+  /* ── MAIN CONTAINER ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 60px 24px 100px; }
+
+  /* ── SECTIONS & ANIMATIONS ── */
+  .section { display: none; opacity: 0; transform: translateY(20px); transition: var(--transition); }
+  .section.visible { display: block; opacity: 1; transform: translateY(0); animation: slideUp 0.5s ease forwards; }
+  
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-label {
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--c-accent); font-weight: 700; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 700; letter-spacing: -0.01em;
+    margin-bottom: 12px; line-height: 1.2;
+  }
+  .section-desc { font-size: 17px; color: var(--c-muted); margin-bottom: 48px; font-weight: 400; }
+
+  /* ── FORMULARIO DATOS GENERALES (Paso 1) ── */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 650px) { .form-grid { grid-template-columns: 1fr; gap: 20px; } }
+  .form-group.full { grid-column: 1 / -1; }
+  
+  .form-label {
+    display: block; font-size: 14px; font-weight: 700; color: var(--c-ink); margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; padding: 14px 16px; border: 2px solid var(--c-border);
+    border-radius: var(--radius); font-family: inherit; font-size: 15px;
+    color: var(--c-ink); transition: var(--transition); background: var(--c-paper);
+  }
+  .form-input::placeholder { color: #A0B0C4; }
+  .form-input:focus {
+    outline: none; border-color: var(--c-accent);
+    box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.1);
+  }
+  .form-select { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23001E4C%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 16px top 50%; background-size: 12px auto; }
+  
+  .radio-group { display: flex; gap: 24px; margin-top: 10px; }
+  .radio-label { display: flex; align-items: center; gap: 8px; font-size: 15px; cursor: pointer; font-weight: 500; transition: color 0.2s; }
+  .radio-label:hover { color: var(--c-accent); }
+  .radio-label input[type="radio"] { width: 18px; height: 18px; accent-color: var(--c-accent); cursor: pointer; }
+
+  /* ── CARDS SELECTOR (Pasos 2, 3 y 5) ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .card-option {
+    background: var(--c-paper);
+    border: 2px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .card-option:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+  .card-option:hover { border-color: var(--c-accent); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .card-option.selected { border-color: var(--c-accent); background: #F0F7FF; box-shadow: var(--shadow-md); }
+  
+  .card-option .card-icon { margin-bottom: 16px; display: flex; justify-content: center; color: var(--c-accent); transition: transform 0.3s ease; }
+  .card-option:hover .card-icon { transform: scale(1.1); }
+  
+  .card-option .card-name { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--c-ink); }
+  .card-option .card-desc { font-size: 13px; color: var(--c-muted); line-height: 1.5; }
+  .card-option .card-check {
+    position: absolute; top: 16px; right: 16px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--c-accent); display: none;
+    align-items: center; justify-content: center;
+    color: white; font-weight: bold; font-size: 12px;
+  }
+  .card-option.selected .card-check { display: flex; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  
+  /* ── QUESTION BLOCK (Paso 4) ── */
+  .question-block {
+    background: var(--c-paper); border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg); padding: 32px; margin-bottom: 24px;
+    transition: var(--transition); box-shadow: var(--shadow-sm);
+  }
+  .question-block:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.06); border-color: #C1D0DF; }
+  .question-num {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .question-num .q-tag {
+    background: var(--c-tag-bg); color: var(--c-accent); padding: 4px 10px; border-radius: 20px; font-size: 11px;
+  }
+  .question-text {
+    font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 600; line-height: 1.4;
+    margin-bottom: 24px; color: var(--c-ink);
+  }
+  .options-list { display: flex; flex-direction: column; gap: 12px; }
+  .option-item {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 2px solid var(--c-border); border-radius: var(--radius-lg);
+    cursor: pointer; transition: var(--transition); background: white;
+  }
+  .option-item:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+  .option-item:hover { border-color: var(--c-accent); background: #F8FAFC; transform: translateX(4px); }
+  .option-item.selected { border-color: var(--c-accent); background: #F0F7FF; }
+  .option-item.selected .opt-radio { border-color: var(--c-accent); }
+  .option-item.selected .opt-radio::after { transform: translate(-50%, -50%) scale(1); }
+  .opt-radio {
+    width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--c-muted); flex-shrink: 0;
+    transition: var(--transition); position: relative; background: white;
+  }
+  .opt-radio::after {
+    content: ''; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--c-accent); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .opt-text { font-size: 15px; line-height: 1.5; flex: 1; font-weight: 500; color: var(--c-ink); }
+
+  /* ── NAV BUTTONS ── */
+  .nav-row {
+    display: flex; gap: 16px; align-items: center; justify-content: space-between;
+    margin-top: 48px; border-top: 1px solid var(--c-border); padding-top: 32px; flex-wrap: wrap;
+  }
+  .nav-row-center { justify-content: center; }
+  .btn {
+    font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600;
+    padding: 16px 32px; border-radius: var(--radius-lg); border: none; cursor: pointer; transition: var(--transition);
+    letter-spacing: 0.02em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary { background: var(--c-accent); color: white; box-shadow: 0 4px 12px rgba(0,86,179,0.3); }
+  .btn-primary:hover:not(:disabled) { background: var(--c-accent-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,86,179,0.4); }
+  .btn-primary:disabled { background: var(--c-border); color: var(--c-muted); box-shadow: none; cursor: not-allowed; opacity: 0.7; }
+  .btn-secondary { background: white; color: var(--c-ink); border: 2px solid var(--c-border); }
+  .btn-secondary:hover { border-color: var(--c-accent); color: var(--c-accent); background: #F9F9F9; }
+
+  /* ── LOADING STATE ── */
+  #loading-section { text-align: center; padding: 60px 0; }
+  .spinner {
+    width: 60px; height: 60px; border: 6px solid var(--c-border); border-top-color: var(--c-accent);
+    border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading-section h3 { font-family: 'Poppins', sans-serif; font-size: 24px; margin-bottom: 8px; }
+  #loading-section p { color: var(--c-muted); }
+
+  /* ── RESULTADO (Paso 6) ── */
+  .result-wrap { animation: slideUp 0.6s ease; }
+  .result-header {
+    background: var(--c-paper); color: var(--c-ink); border-radius: 24px; border: 1px solid var(--c-border);
+    padding: 48px 40px; margin-bottom: 32px; position: relative; overflow: hidden; box-shadow: 0 12px 30px rgba(0, 86, 179, 0.08);
+  }
+  .result-header::after {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    background: radial-gradient(circle at top right, rgba(0,163,224,0.08), transparent 60%); pointer-events: none;
+  }
+  .result-header-bg-text {
+    position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-family: 'Poppins', sans-serif;
+    font-size: clamp(80px, 12vw, 140px); font-weight: 800; color: rgba(0, 30, 76, 0.03); line-height: 1; pointer-events: none;
+  }
+  .result-badge {
+    display: inline-block; background: var(--c-tag-bg); color: var(--c-accent); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; border-radius: 30px; margin-bottom: 20px;
+    position: relative; z-index: 2; border: 1px solid rgba(0,86,179,0.1);
+  }
+  .result-header h2 {
+    font-family: 'Poppins', sans-serif; font-size: clamp(28px, 4vw, 40px); font-weight: 700; line-height: 1.2;
+    margin-bottom: 12px; letter-spacing: -0.01em; position: relative; z-index: 2;
+  }
+  .result-header .score-line { font-size: 16px; color: var(--c-muted); position: relative; z-index: 2;}
+  .result-header .score-val { color: var(--c-ink); font-weight: 700; font-size: 18px;}
+
+  .score-bar-row { margin-top: 32px; position: relative; z-index: 2; }
+  .score-bar-bg { background: var(--c-border); border-radius: 8px; height: 12px; overflow: hidden; }
+  .score-bar-fill {
+    height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+    width: 0%; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .result-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  @media (max-width: 768px) { .result-cards { grid-template-columns: 1fr; } }
+
+  .result-card { background: var(--c-paper); border: 1px solid var(--c-border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow-sm); transition: var(--transition); }
+  .result-card:hover { box-shadow: 0 12px 30px rgba(0,0,0,0.05); transform: translateY(-4px); }
+  .result-card.full { grid-column: 1 / -1; }
+  .result-card.summary { background: #F8FAFC; border-color: #C1D0DF; }
+  
+  .rc-label {
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-muted);
+    margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;
+  }
+  .rc-label::before { content: ''; width: 4px; height: 16px; border-radius: 2px; }
+  .result-card.reto .rc-label::before { background: var(--c-accent); }
+  .result-card.herramienta .rc-label::before { background: var(--c-accent2); }
+  .result-card.insight .rc-label::before { background: var(--c-accent3); }
+  .result-card.temas .rc-label::before { background: #7B5EA7; }
+  .result-card.summary .rc-label::before { background: var(--c-ink); }
+
+  .result-card h3 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.3; color: var(--c-ink); margin-bottom: 12px; }
+  .result-card p { font-size: 15px; color: var(--c-muted); line-height: 1.7; }
+
+  .temas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+  .tema-row { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: var(--c-bg); border-radius: var(--radius-lg); border: 1px solid var(--c-border); }
+  .tema-row .tema-bullet { width: 8px; height: 8px; border-radius: 50%; background: var(--c-accent); flex-shrink: 0; margin-top: 6px; }
+  .tema-name { font-weight: 700; color: var(--c-ink); margin-bottom: 4px; font-size: 15px;}
+  .tema-herr { color: var(--c-muted); font-size: 13px; line-height: 1.4; }
+
+  /* ── TOOLTIP ── */
+  .info-note {
+    background: #F0F7FF; border: 1px solid #BAE6FD; border-radius: var(--radius-lg); padding: 16px 20px;
+    font-size: 14px; color: #0056B3; margin-bottom: 32px; display: flex; gap: 12px; align-items: flex-start;
+  }
+  .info-note .info-icon { flex-shrink: 0; color: var(--c-accent); }
+
+  /* ── ESTILOS PARA IMPRESIÓN (PDF) ── */
+  @media print {
+    .site-header, .progress-bar-wrap, .hero, .nav-row, .no-print { display: none !important; }
+    body { background: white; color: black; }
+    .main { padding: 0; max-width: 100%; margin: 0; }
+    .result-header { box-shadow: none; border: 1px solid #ccc; background: white; padding: 24px; border-radius: 8px; page-break-inside: avoid; }
+    .result-header h2, .result-header .score-val, .result-header .score-line { color: black; }
+    .result-header-bg-text { display: none; }
+    .result-badge { border: 1px solid #ccc; color: black; background: #eee; }
+    .score-bar-bg { background: #eee; }
+    .score-bar-fill { background: #555; }
+    .result-cards { display: block; }
+    .result-card { page-break-inside: avoid; border: 1px solid #ccc; box-shadow: none; margin-bottom: 16px; padding: 20px; border-radius: 8px;}
+    .tema-row { border-color: #ccc; page-break-inside: avoid; }
+  }
+</style>
 </head>
-<body class="min-h-screen bg-gray-50 p-6 flex justify-center text-gray-800">
+<body>
 
-    <div class="max-w-6xl w-full">
-        
-        <!-- HEADER CORPORATIVO RUTA C -->
-        <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 bg-blue-950 p-6 rounded-xl shadow-lg border border-blue-900 relative z-20 gap-4">
-            
-            <div class="flex items-center gap-4">
-                <!-- Logo Cámara de Comercio / Ruta C -->
-                <img src="https://img.tiendasicam32.net/rutac/rutac_blanco.png" alt="Ruta C - Cámara de Comercio" class="h-12 md:h-14 object-contain" />
-                
-                <div class="hidden sm:block w-px h-10 bg-blue-800"></div>
-                
-                <div class="hidden sm:block">
-                    <p class="text-xs text-sky-300 font-bold tracking-widest uppercase flex items-center gap-1">
-                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-sky-400"></i> ACTIVA TU CRECIMIENTO
-                    </p>
-                </div>
-            </div>
-            
-            <div class="flex flex-wrap items-center gap-4 mt-2 md:mt-0">
-                <!-- Operador: Emprende Ahora -->
-                <div class="flex items-center gap-3 border-r border-blue-800 pr-4">
-                    <span class="text-[10px] text-blue-300 font-bold uppercase tracking-widest">Operado por:</span>
-                    <div class="bg-white px-2 py-1 rounded-md shadow-sm h-10 flex items-center justify-center">
-                        <img src="data:image/jpeg;base64,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" alt="Emprende Ahora" class="h-8 object-contain" />
-                    </div>
-                </div>
-                
-                <button class="flex items-center gap-2 px-4 py-2 bg-blue-900 border border-blue-800 rounded-md text-sm font-semibold text-white hover:bg-blue-800 transition-colors shadow-sm">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> <span class="hidden sm:inline">Volver al panel</span>
-                </button>
-            </div>
-        </header>
+<header class="site-header">
+  <div class="logos-wrap">
+    <img src="https://img.tiendasicam32.net/rutac/rutac_blanco.png" alt="Ruta C" class="logo-img">
+  </div>
+  <div class="operator">
+    <span class="tagline">Operado por:</span>
+    <img src="data:image/jpeg;base64,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" alt="Emprende Ahora" class="operator-img">
+  </div>
+</header>
 
-        <div class="flex gap-8 flex-col md:flex-row">
-            <!-- Sidebar / Stepper -->
-            <div class="w-full md:w-72 shrink-0 md:pt-2 mb-6 md:mb-0">
-                <div class="relative flex md:flex-col justify-between md:justify-start">
-                    <!-- Línea vertical de fondo -->
-                    <div class="hidden md:block absolute left-[15px] top-4 bottom-8 w-[2px] bg-gray-200 z-0"></div>
-                    
-                    <!-- Paso 1 -->
-                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 md:mb-10 z-10 cursor-pointer" onclick="goToStep(1)">
-                        <div class="relative flex flex-col items-center">
-                            <div id="step-circle-1" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-4 border-sky-500 transition-colors duration-200 shadow-sm">
-                                <span id="step-number-1" class="font-bold text-sky-500 hidden"></span>
-                                <i id="step-check-1" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
-                            </div>
-                            <div id="step-line-1" class="hidden md:block absolute top-8 w-[2px] h-10 bg-blue-950 -z-10 transition-all duration-300 scale-y-0 origin-top"></div>
-                        </div>
-                        <div id="step-text-1" class="pt-1 text-center md:text-left text-gray-800 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
-                                <span class="text-xl font-bold text-gray-700 hidden md:inline">01</span>
-                                <span class="font-semibold text-sm md:text-base">Datos y Diagnóstico</span>
-                            </div>
-                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Info general y diagnóstico</p>
-                        </div>
-                    </div>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">ACTIVA TU CRECIMIENTO</div>
+    <h1>Conoce el <em>estado real</em> de tu empresa</h1>
+    <p>Diagnóstico personalizado para identificar y priorizar los principales retos de tu negocio y recibir la herramienta exacta que necesitas trabajar.</p>
+  </div>
+</div>
 
-                    <!-- Paso 2 -->
-                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 md:mb-10 z-10 cursor-pointer" onclick="goToStep(2)">
-                        <div class="relative flex flex-col items-center">
-                            <div id="step-circle-2" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200">
-                                <span id="step-number-2" class="font-bold text-sky-500 hidden"></span>
-                                <i id="step-check-2" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
-                            </div>
-                            <div id="step-line-2" class="hidden md:block absolute top-8 w-[2px] h-10 bg-blue-950 -z-10 transition-all duration-300 scale-y-0 origin-top"></div>
-                        </div>
-                        <div id="step-text-2" class="pt-1 text-center md:text-left text-gray-500 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
-                                <span class="text-xl font-bold text-gray-400 hidden md:inline">02</span>
-                                <span class="font-semibold text-sm md:text-base">Desarrollo Metodológico</span>
-                            </div>
-                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Fases Ruta C 1:1</p>
-                        </div>
-                    </div>
+<div class="progress-bar-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" id="progress-container">
+  <div class="progress-steps">
+    <div class="progress-step active" id="ps1"></div>
+    <div class="progress-step" id="ps2"></div>
+    <div class="progress-step" id="ps3"></div>
+    <div class="progress-step" id="ps4"></div>
+    <div class="progress-step" id="ps5"></div>
+    <div class="progress-step" id="ps6" style="display: none;"></div>
+  </div>
+  <div class="progress-label" id="progress-label">Paso 1 de 5: Datos Generales</div>
+</div>
 
-                    <!-- Paso 3 -->
-                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 md:mb-10 z-10 cursor-pointer" onclick="goToStep(3)">
-                        <div class="relative flex flex-col items-center">
-                            <div id="step-circle-3" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200">
-                                <span id="step-number-3" class="font-bold text-sky-500 hidden"></span>
-                                <i id="step-check-3" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
-                            </div>
-                            <div id="step-line-3" class="hidden md:block absolute top-8 w-[2px] h-10 bg-blue-950 -z-10 transition-all duration-300 scale-y-0 origin-top"></div>
-                        </div>
-                        <div id="step-text-3" class="pt-1 text-center md:text-left text-gray-500 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
-                                <span class="text-xl font-bold text-gray-400 hidden md:inline">03</span>
-                                <span class="font-semibold text-sm md:text-base">Unidades intervenidas</span>
-                            </div>
-                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Información de la UP</p>
-                        </div>
-                    </div>
+<main class="main">
 
-                    <!-- Paso 4 -->
-                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 z-10 cursor-pointer" onclick="goToStep(4)">
-                        <div class="relative flex flex-col items-center">
-                            <div id="step-circle-4" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200">
-                                <span id="step-number-4" class="font-bold text-sky-500 hidden"></span>
-                                <i id="step-check-4" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
-                            </div>
-                        </div>
-                        <div id="step-text-4" class="pt-1 text-center md:text-left text-gray-500 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
-                                <span class="text-xl font-bold text-gray-400 hidden md:inline">04</span>
-                                <span class="font-semibold text-sm md:text-base">Soportes</span>
-                            </div>
-                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Evidencias y documentos</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contenido Principal -->
-            <div class="flex-1 bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 overflow-hidden relative">
-                
-                <!-- Controles de Navegación Superiores -->
-                <div class="flex justify-between items-center pb-6 border-b border-gray-100 mb-6">
-                    <button id="btn-prev" onclick="prevStep()" class="px-6 py-2 rounded-md font-semibold transition-colors border border-gray-200 text-gray-400 cursor-not-allowed bg-white" disabled>
-                        Anterior
-                    </button>
-                    
-                    <button id="btn-next" onclick="nextStep()" class="px-6 py-2 rounded-md font-semibold bg-sky-500 text-white hover:bg-sky-600 shadow-sm transition-colors">
-                        Siguiente
-                    </button>
-                </div>
-
-                <!-- CONTENEDORES DE PASOS -->
-
-                <!-- PASO 1: Datos y Diagnóstico -->
-                <div id="step-content-1" class="space-y-6 animation-fade-in block">
-                    <!-- Fila 1: Consultor, Correo Consultor, Programa, Ciclo -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Consultor</label>
-                            <select id="consultor" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
-                                <option value="">Seleccione un consultor...</option>
-                                <option>Óscar Solano</option>
-                                <option>Jeannie Salinas</option>
-                                <option>Alexandra Martínez</option>
-                                <option>Andrés Arévalo</option>
-                                <option>Carolina Zabala</option>
-                                <option>Maira Mendivil</option>
-                                <option>Jorge Murillo</option>
-                                <option>Iván Bastidas</option>
-                                <option>María José Sierra</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Correo del Consultor</label>
-                            <input id="correo-consultor" type="email" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="mentor@rutac.com" />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Programa</label>
-                            <select id="programa" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
-                                <option>Mentorías Ruta C</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Ciclo</label>
-                            <select id="ciclo" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
-                                <option>Convocatoria 2026</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Fila 2: Tipo de Mentoría -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Tipo de mentoría</label>
-                        <select id="mentoria-select" onchange="updateMentoriaInfo()" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
-                            <option value="">Seleccione el tipo de mentoría...</option>
-                            <option value="gerencial">Gestión Gerencial (Estrategia, finanzas)</option>
-                            <option value="comercial">Comercial (Marketing, ventas)</option>
-                            <option value="operativa">Eficiencia (Procesos)</option>
-                            <option value="digital">Innovación (Tecnología y Desarrollo)</option>
-                            <option value="talento">Talento Humano (Liderazgo Organizacional)</option>
-                        </select>
-                        
-                        <!-- Caja de Información Dinámica (Herramienta y Entregable) -->
-                        <div id="mentoria-info" class="hidden mt-3 p-4 bg-sky-50 rounded-md border border-sky-200 text-sm transition-all duration-300">
-                            <p class="text-sky-900 mb-2"><span class="font-bold">Herramienta:</span> <span id="mentoria-herramienta"></span></p>
-                            <p class="text-sky-900"><span class="font-bold">Entregable:</span> <span id="mentoria-entregable"></span></p>
-                        </div>
-                    </div>
-
-                    <!-- Fila 3: Modalidad, Fecha Inicio, Fecha Fin -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Modalidad</label>
-                            <select id="modalidad" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
-                                <option>Virtual</option>
-                                <option>Presencial</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Fecha inicio</label>
-                            <input id="fecha-inicio" type="datetime-local" value="2026-04-13T16:15" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Fecha fin</label>
-                            <input id="fecha-fin" type="datetime-local" value="2026-04-13T17:15" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" />
-                        </div>
-                    </div>
-
-                    <!-- Fila 4: Diagnóstico -->
-                    <div class="border-t border-gray-200 pt-6 mt-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-bold text-blue-950 flex items-center gap-2">
-                                <i data-lucide="clipboard-list" class="w-5 h-5 text-sky-500"></i>
-                                Diagnóstico Inicial
-                            </h3>
-                            <!-- Botón Link al Diagnóstico -->
-                            <a href="https://emprendeahora.github.io/diagnostico.rutac/" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-sky-50 text-sky-700 hover:bg-sky-100 font-semibold rounded-md transition-colors text-sm border border-sky-200 shadow-sm">
-                                Llenar Diagnóstico UP <i data-lucide="external-link" class="w-4 h-4"></i>
-                            </a>
-                        </div>
-                        
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Resultado del Diagnóstico (Consolidado)</label>
-                        <p class="text-xs text-gray-500 font-medium mb-2">Pegue aquí la información relevante o el resultado generado tras realizar el diagnóstico con el formulario externo.</p>
-                        
-                        <div class="border border-gray-300 rounded-md overflow-hidden bg-white focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-shadow shadow-sm">
-                            <textarea id="resultado-diagnostico" class="w-full p-4 outline-none resize-y text-gray-700 h-32" placeholder="Describa o pegue los resultados del diagnóstico inicial aquí..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PASO 2: Desarrollo Metodológico -->
-                <div id="step-content-2" class="space-y-6 animation-fade-in hidden">
-                    
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-blue-950">Metodología Mentorías Ruta C 1:1</h2>
-                        <p class="text-gray-500 mt-1">Siga la estructura de 2 horas para garantizar la trazabilidad de la intervención.</p>
-                    </div>
-
-                    <!-- NUEVA FASE 0: REGISTRO DE ASISTENCIA Y APROBACIÓN -->
-                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden border-l-4 border-l-green-500 mb-6">
-                        <div class="bg-green-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">0</div>
-                                <div>
-                                    <h4 class="font-bold text-green-900">REGISTRO DE ASISTENCIA Y APROBACIÓN - MENTORIAS RUTA C</h4>
-                                    <p class="text-xs text-green-700 font-medium">Punto Cero: Confirmación de inicio</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-gray-700 mb-3 font-medium">Estimado mentor, antes de dar paso a la mentoría, por favor envíe el siguiente enlace para que la unidad productiva diligencie su asistencia y aprobación:</p>
-                            <div class="flex items-center gap-2">
-                                <input type="text" readonly value="https://docs.google.com/forms/d/e/1FAIpQLScJ1WWoVEOCBxj4-Mo6MD6uqVkbsZELpZgsQj6JtEa7DJqGng/viewform" id="link-asistencia" class="flex-1 border border-gray-300 rounded-md p-2.5 text-sm text-gray-600 bg-gray-50 outline-none focus:border-green-500 transition-colors shadow-sm" />
-                                <button type="button" onclick="copyAttendanceLink()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-md text-sm font-semibold transition-colors shadow-sm flex items-center gap-2 whitespace-nowrap">
-                                    <i data-lucide="copy" class="w-4 h-4"></i> Copiar Link
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fase 1: Identificación de la necesidad -->
-                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                        <div class="bg-blue-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-blue-950 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</div>
-                                <div>
-                                    <h4 class="font-bold text-blue-950">Identificación de la necesidad (Diagnóstico)</h4>
-                                    <p class="text-xs text-blue-800">Objetivo: Comprender la situación actual del negocio</p>
-                                </div>
-                            </div>
-                            <span class="flex items-center gap-1 text-sm font-semibold text-blue-900 bg-white px-3 py-1 rounded-full border border-blue-200 shadow-sm">
-                                <i data-lucide="clock" class="w-4 h-4"></i> 20 min
-                            </span>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-gray-600 mb-3">Aplique las preguntas clave por área e identifique las brechas y prioridades.</p>
-                            <textarea id="fase-necesidad" class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-sky-500 text-sm h-24" placeholder="Describa la situación actual y hallazgos principales..."></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Fase 2: Definición del reto -->
-                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                        <div class="bg-blue-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-blue-950 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</div>
-                                <div>
-                                    <h4 class="font-bold text-blue-950">Definición del reto</h4>
-                                    <p class="text-xs text-blue-800">Objetivo: Establecer un reto claro y medible</p>
-                                </div>
-                            </div>
-                            <span class="flex items-center gap-1 text-sm font-semibold text-blue-900 bg-white px-3 py-1 rounded-full border border-blue-200 shadow-sm">
-                                <i data-lucide="clock" class="w-4 h-4"></i> 20 min
-                            </span>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-gray-600 mb-3">Analice el problema central que impacta el crecimiento y formule el reto alineado con el área de intervención.</p>
-                            <textarea id="fase-reto" class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-sky-500 text-sm h-24" placeholder="Describa el reto principal definido..."></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Fase 3: Definición de la solución -->
-                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                        <div class="bg-blue-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-blue-950 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
-                                <div>
-                                    <h4 class="font-bold text-blue-950">Definición de la solución</h4>
-                                    <p class="text-xs text-blue-800">Objetivo: Diseñar una solución viable</p>
-                                </div>
-                            </div>
-                            <span class="flex items-center gap-1 text-sm font-semibold text-blue-900 bg-white px-3 py-1 rounded-full border border-blue-200 shadow-sm">
-                                <i data-lucide="clock" class="w-4 h-4"></i> 20 min
-                            </span>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-gray-600 mb-3">Evalúe alternativas y seleccione la mejor solución según la realidad del negocio. Defina el entregable.</p>
-                            <textarea id="fase-solucion" class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-sky-500 text-sm h-24" placeholder="Detalle la solución seleccionada y su justificación..."></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Fase 4: Plan de acción y roadmap -->
-                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden border-l-4 border-l-sky-500">
-                        <div class="bg-sky-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-sky-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</div>
-                                <div>
-                                    <h4 class="font-bold text-sky-900">Plan de acción y roadmap</h4>
-                                    <p class="text-xs text-sky-700">Objetivo: Convertir la solución en acciones concretas</p>
-                                </div>
-                            </div>
-                            <span class="flex items-center gap-1 text-sm font-bold text-sky-700 bg-white px-3 py-1 rounded-full border border-sky-200 shadow-sm">
-                                <i data-lucide="clock" class="w-4 h-4"></i> 60 min
-                            </span>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-gray-600 mb-3">Desarrollo del entregable práctico y construcción del roadmap (acciones, responsables, tiempos).</p>
-                            
-                            <!-- ESTRUCTURA DEL PLAN DE ACCIÓN (TABLA) -->
-                            <div class="space-y-4 mt-4">
-                                <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-1">1. Objetivo General del Plan</label>
-                                    <input type="text" id="plan-objetivo-general" class="w-full border border-gray-300 rounded-md p-3 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm text-sm" placeholder="Defina el objetivo general que se persigue con esta herramienta..." />
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <label class="block text-sm font-semibold text-gray-700">2. Roadmap de Implementación (Tareas)</label>
-                                        <button type="button" onclick="addPlanRow()" class="flex items-center gap-1 text-xs bg-sky-100 text-sky-700 hover:bg-sky-200 px-3 py-1.5 rounded-md font-bold transition-colors border border-sky-200">
-                                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Agregar fila
-                                        </button>
-                                    </div>
-                                    <div class="overflow-x-auto border border-gray-300 rounded-md shadow-sm">
-                                        <table class="w-full text-left border-collapse min-w-[800px]" id="plan-table">
-                                            <thead>
-                                                <tr class="bg-gray-50 text-xs text-gray-700 border-b border-gray-300 uppercase tracking-wide">
-                                                    <th class="p-3 font-bold w-1/4">Objetivos Claves</th>
-                                                    <th class="p-3 font-bold w-1/4">Resultados Claves</th>
-                                                    <th class="p-3 font-bold w-[12%]">Meta</th>
-                                                    <th class="p-3 font-bold w-[15%]">Fecha Límite</th>
-                                                    <th class="p-3 font-bold w-[18%]">Responsables</th>
-                                                    <th class="p-3 font-bold w-[5%] text-center">Acción</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="plan-table-body" class="text-sm">
-                                                <!-- Las filas se inyectan mediante JavaScript -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- PASO 3: Unidades Intervenidas -->
-                <div id="step-content-3" class="space-y-8 animation-fade-in hidden">
-                    <h2 class="text-2xl font-bold text-blue-950">Datos de la Unidad Intervenida</h2>
-                    
-                    <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Nombre Entidad -->
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre de la Entidad Intervenida</label>
-                                <input id="nombre-entidad" type="text" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="Ej. Mi Empresa S.A.S." />
-                            </div>
-                            
-                            <!-- NIT / CC -->
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">NIT / CC</label>
-                                <input id="nit" type="text" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="Ej. 900.123.456-7" />
-                            </div>
-                            
-                            <!-- Quien recibe la mentoría -->
-                            <div class="md:col-span-2">
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre completo de quien recibe la mentoría</label>
-                                <input id="nombre-recibe" type="text" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="Nombres y apellidos completos" />
-                            </div>
-
-                            <!-- Correo de la UP -->
-                            <div class="md:col-span-2">
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico de la Unidad Productiva (UP)</label>
-                                <input id="correo-entidad" type="email" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="empresa@correo.com" />
-                            </div>
-                            
-                            <!-- Otros participantes -->
-                            <div class="md:col-span-2">
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Otros participantes en el espacio (Opcional)</label>
-                                <textarea id="otros-participantes" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm resize-y h-24" placeholder="Ingrese el nombre y cargo de otras personas presentes en la sesión..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PASO 4: Soportes -->
-                <div id="step-content-4" class="space-y-6 animation-fade-in hidden pb-16">
-                    <div class="mb-4">
-                        <h2 class="text-2xl font-bold text-blue-950">Soportes de la Mentoría</h2>
-                        <p class="text-gray-500 text-sm mt-1">Fase 5: Informe de intervención y cargue de evidencias para garantizar la trazabilidad.</p>
-                    </div>
-
-                    <!-- Soporte 1 -->
-                    <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm">
-                        <label class="block text-sm font-bold text-gray-800 mb-1">1. Fotografía del espacio</label>
-                        <p class="text-xs text-gray-500 font-medium mb-3">Imagen del espacio donde se vean claramente las caras de las personas.</p>
-                        <div class="flex">
-                            <label class="bg-gray-50 border border-gray-300 border-r-0 rounded-l-md px-4 py-3 text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors font-medium">
-                                <span>Seleccionar archivo</span>
-                                <input id="file-foto" type="file" class="hidden" accept="image/*" onchange="document.getElementById('name-foto').textContent = this.files[0] ? this.files[0].name : 'Sin archivos seleccionados'" />
-                            </label>
-                            <div id="name-foto" class="flex-1 border border-gray-300 rounded-r-md px-4 py-3 text-gray-500 bg-white truncate">
-                                Sin archivos seleccionados
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Soporte 2 -->
-                    <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm">
-                        <label class="block text-sm font-bold text-gray-800 mb-1">2. Herramienta trabajada</label>
-                        <p class="text-xs text-gray-500 font-medium mb-3">Documento o evidencia de la herramienta que se trabajó en el espacio.</p>
-                        <div class="flex">
-                            <label class="bg-gray-50 border border-gray-300 border-r-0 rounded-l-md px-4 py-3 text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors font-medium">
-                                <span>Seleccionar archivo</span>
-                                <input id="file-herramienta" type="file" class="hidden" onchange="document.getElementById('name-herramienta').textContent = this.files[0] ? this.files[0].name : 'Sin archivos seleccionados'" />
-                            </label>
-                            <div id="name-herramienta" class="flex-1 border border-gray-300 rounded-r-md px-4 py-3 text-gray-500 bg-white truncate">
-                                Sin archivos seleccionados
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Soporte 3 -->
-                    <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm">
-                        <label class="block text-sm font-bold text-gray-800 mb-1">3. Plan de trabajo</label>
-                        <p class="text-xs text-gray-500 font-medium mb-3">Documento del plan de trabajo estructurado para ayudar al empresario.</p>
-                        <div class="flex">
-                            <label class="bg-gray-50 border border-gray-300 border-r-0 rounded-l-md px-4 py-3 text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors font-medium">
-                                <span>Seleccionar archivo</span>
-                                <input id="file-plan" type="file" class="hidden" onchange="document.getElementById('name-plan').textContent = this.files[0] ? this.files[0].name : 'Sin archivos seleccionados'" />
-                            </label>
-                            <div id="name-plan" class="flex-1 border border-gray-300 rounded-r-md px-4 py-3 text-gray-500 bg-white truncate">
-                                Sin archivos seleccionados
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+  <!-- PASO 1: DATOS GENERALES -->
+  <div class="section visible" id="step1">
+    <div class="section-label">Paso 1</div>
+    <div class="section-title">Datos Generales</div>
+    <div class="section-desc">Antes de iniciar, cuéntanos un poco sobre ti y la empresa que recibirá la mentoría.</div>
+    
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="inp-nombre">Nombre de quien recibe la mentoría</label>
+        <input type="text" class="form-input" id="inp-nombre" placeholder="Ej. Ana Pérez" oninput="validateStep1()">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-correo">Correo electrónico</label>
+        <input type="email" class="form-input" id="inp-correo" placeholder="correo@empresa.com" oninput="validateStep1()">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-empresa">Nombre de la empresa</label>
+        <input type="text" class="form-input" id="inp-empresa" placeholder="Tu Empresa S.A.S." oninput="validateStep1()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipo de persona</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="tipo_persona" value="Natural" onchange="validateStep1()">
+            <span>Natural</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="tipo_persona" value="Jurídica" onchange="validateStep1()">
+            <span>Jurídica</span>
+          </label>
         </div>
-
-        <!-- BOTONES DE ACCIÓN FINALES (Solo visibles en paso 4) -->
-        <div id="final-buttons" class="flex flex-wrap justify-center gap-4 mt-8 animation-fade-in hidden">
-            <button class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-md shadow-sm transition-colors">
-                <i data-lucide="arrow-left" class="w-[18px] h-[18px] rotate-180" style="transform: rotate(180deg) scaleX(-1);"></i> Cancelar
-            </button>
-            <button class="px-6 py-3 bg-blue-100 text-blue-800 hover:bg-blue-200 font-semibold rounded-md shadow-sm transition-colors">
-                Guardar Borrador
-            </button>
-            <button id="btn-submit" onclick="submitData()" class="px-8 py-3 bg-blue-950 hover:bg-blue-900 text-white font-bold rounded-md shadow-md transition-colors flex items-center gap-2 border border-blue-800">
-                <span>Guardar En Firme</span>
-                <i data-lucide="save" class="w-5 h-5 text-sky-400"></i>
-            </button>
-        </div>
-
+      </div>
+      <div class="form-group full">
+        <label class="form-label" for="sel-mentor">Nombre del mentor(a) asignado</label>
+        <select class="form-input form-select" id="sel-mentor" onchange="validateStep1()">
+          <option value="">Selecciona tu mentor(a)...</option>
+          <option value="Oscar Solano">Oscar Solano</option>
+          <option value="José Andrés Arevalo">José Andrés Arevalo</option>
+          <option value="Jorge Murillo">Jorge Murillo</option>
+          <option value="Alexandra Martinez">Alexandra Martinez</option>
+          <option value="Jeannie Salinas">Jeannie Salinas</option>
+          <option value="Iván Bastida">Iván Bastida</option>
+          <option value="Maria José Sierra">Maria José Sierra</option>
+          <option value="Carolina Zabala">Carolina Zabala</option>
+          <option value="Maira Mendivil">Maira Mendivil</option>
+        </select>
+      </div>
     </div>
+    
+    <div class="nav-row nav-row-center">
+      <button class="btn btn-primary" id="btn-step1" disabled onclick="goStep(2)">Comenzar Diagnóstico</button>
+    </div>
+  </div>
 
-    <script>
-        // Inicializar Iconos
-        lucide.createIcons();
+  <!-- PASO 2: ETAPA -->
+  <div class="section" id="step2">
+    <div class="section-label">Paso 2</div>
+    <div class="section-title">¿En qué etapa se encuentra tu empresa?</div>
+    <div class="section-desc">Selecciona la etapa que mejor describe el momento actual de tu negocio.</div>
+    <div class="cards-grid" id="etapa-grid" role="radiogroup"></div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="goStep(1)">Volver</button>
+      <button class="btn btn-primary" id="btn-step2" disabled onclick="goStep(3)">Continuar</button>
+    </div>
+  </div>
 
-        // Lógica del Formulario Multipaso
-        const totalSteps = 4;
-        let currentStep = 1;
+  <!-- PASO 3: LÍNEA -->
+  <div class="section" id="step3">
+    <div class="section-label">Paso 3</div>
+    <div class="section-title">¿Qué área quieres diagnosticar?</div>
+    <div class="section-desc">Elige la línea de intervención sobre la que tienes más dudas o necesitas trabajar en este momento.</div>
+    <div class="cards-grid" id="linea-grid" role="radiogroup"></div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="goStep(2)">Volver</button>
+      <button class="btn btn-primary" id="btn-step3" disabled onclick="goStep(4)">Continuar</button>
+    </div>
+  </div>
 
-        function renderSteps() {
-            for (let i = 1; i <= totalSteps; i++) {
-                const circle = document.getElementById(`step-circle-${i}`);
-                const textContainer = document.getElementById(`step-text-${i}`);
-                const checkIcon = document.getElementById(`step-check-${i}`);
-                const titleSpan = textContainer.querySelectorAll('span')[1];
-                const line = document.getElementById(`step-line-${i}`);
+  <!-- PASO 4: PREGUNTAS -->
+  <div class="section" id="step4">
+    <div class="section-label">Paso 4</div>
+    <div class="section-title">Preguntas de profundización</div>
+    <div class="section-desc">Responde con honestidad. No hay respuestas correctas o incorrectas — solo queremos entender tu realidad actual.</div>
+    
+    <div class="info-note">
+      <span class="info-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      </span>
+      <span><strong>Tip de sinceridad:</strong> Elige la opción que describe tu situación real de hoy, no la meta que deseas alcanzar mañana. Esto garantiza que la herramienta recomendada sea útil.</span>
+    </div>
+    
+    <div id="questions-container"></div>
+    
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="goStep(3)">Volver</button>
+      <button class="btn btn-primary" id="btn-step4" disabled onclick="iniciarCalculo()">Siguiente Paso</button>
+    </div>
+  </div>
 
-                if (i < currentStep) {
-                    circle.className = "w-8 h-8 rounded-full flex items-center justify-center bg-blue-950 border-2 border-blue-950 transition-colors duration-200 shadow-sm";
-                    checkIcon.classList.remove('hidden');
-                    titleSpan.className = "font-bold text-sm md:text-base text-gray-800";
-                    if(line) { line.classList.remove('scale-y-0'); line.classList.add('scale-y-100'); }
-                } else if (i === currentStep) {
-                    circle.className = "w-8 h-8 rounded-full flex items-center justify-center bg-white border-4 border-sky-500 transition-colors duration-200 shadow-md";
-                    checkIcon.classList.add('hidden');
-                    titleSpan.className = "font-bold text-sm md:text-base text-sky-600";
-                    if(line) { line.classList.remove('scale-y-100'); line.classList.add('scale-y-0'); }
-                } else {
-                    circle.className = "w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200";
-                    checkIcon.classList.add('hidden');
-                    titleSpan.className = "font-semibold text-sm md:text-base text-gray-400";
-                    if(line) { line.classList.remove('scale-y-100'); line.classList.add('scale-y-0'); }
-                }
-            }
+  <!-- PASO 5: ENFOQUE GERENCIA (Solo si elige Gerencia) -->
+  <div class="section" id="step5">
+    <div class="section-label">Paso 5</div>
+    <div class="section-title">Profundización en Gerencia</div>
+    <div class="section-desc">Has seleccionado Gerencia. Por favor indica en cuál de estas dos áreas específicas necesitas mayor atención.</div>
+    <div class="cards-grid" id="enfoque-grid" role="radiogroup">
+      <button class="card-option" role="radio" aria-checked="false" data-id="estrategia" onclick="selectSubLinea('estrategia', this)">
+        <span class="card-icon" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+        </span>
+        <div class="card-name">Gerencia Estratégica</div>
+        <div class="card-desc">Enfoque en modelo de negocio, crecimiento, innovación y estrategia de valor.</div>
+        <div class="card-check">✓</div>
+      </button>
+      <button class="card-option" role="radio" aria-checked="false" data-id="finanzas" onclick="selectSubLinea('finanzas', this)">
+        <span class="card-icon" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </span>
+        <div class="card-name">Gerencia Financiera</div>
+        <div class="card-desc">Enfoque en costos, presupuestos, flujo de caja y rentabilidad.</div>
+        <div class="card-check">✓</div>
+      </button>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="goStep(4)">Volver</button>
+      <button class="btn btn-primary" id="btn-step5" disabled onclick="procesarResultados()">Generar Diagnóstico</button>
+    </div>
+  </div>
 
-            for (let i = 1; i <= totalSteps; i++) {
-                document.getElementById(`step-content-${i}`).classList.add('hidden');
-                document.getElementById(`step-content-${i}`).classList.remove('block');
-            }
-            document.getElementById(`step-content-${currentStep}`).classList.remove('hidden');
-            document.getElementById(`step-content-${currentStep}`).classList.add('block');
+  <!-- ESTADO DE CARGA INTERMEDIO -->
+  <div class="section" id="loading-section">
+    <div class="spinner"></div>
+    <h3 id="loading-title">Analizando tus respuestas...</h3>
+    <p id="loading-desc">Identificando tu reto principal y buscando herramientas ideales.</p>
+  </div>
 
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            const finalButtons = document.getElementById('final-buttons');
+  <!-- PASO 6: RESULTADO -->
+  <div class="section" id="step6">
+    <div id="result-container"></div>
+    <div class="nav-row nav-row-center no-print" style="margin-top: 40px; gap: 16px;">
+      <button class="btn btn-secondary" onclick="window.print()">Descargar PDF / Imprimir 🖨️</button>
+      <button class="btn btn-primary" id="btn-enviar-correo" onclick="enviarCorreo()">Enviar Resultados al Correo ✉️</button>
+      <button class="btn btn-secondary" onclick="reiniciar()">Hacer otro diagnóstico ↺</button>
+    </div>
+  </div>
 
-            if (currentStep === 1) {
-                btnPrev.disabled = true;
-                btnPrev.className = "px-6 py-2 rounded-md font-semibold transition-colors border border-gray-200 text-gray-400 cursor-not-allowed bg-white";
-            } else {
-                btnPrev.disabled = false;
-                btnPrev.className = "px-6 py-2 rounded-md font-semibold transition-colors border border-gray-300 text-gray-700 hover:bg-gray-50 bg-white shadow-sm";
-            }
+</main>
 
-            if (currentStep === totalSteps) {
-                btnNext.className = "px-6 py-2 rounded-md font-semibold bg-sky-300 text-white cursor-default";
-                finalButtons.classList.remove('hidden');
-            } else {
-                btnNext.className = "px-6 py-2 rounded-md font-semibold bg-sky-500 text-white hover:bg-sky-600 shadow-sm transition-colors cursor-pointer";
-                finalButtons.classList.add('hidden');
-            }
-        }
+<script>
+// ==========================================
+// 1. BASE DE DATOS DEL DIAGNÓSTICO
+// ==========================================
 
-        function nextStep() {
-            if (currentStep < totalSteps) { currentStep++; renderSteps(); }
-        }
+const ETAPAS = [
+  { id: 'descubrimiento', name: 'Descubrimiento', icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>', desc: 'Validando mi idea de negocio en el mercado.' },
+  { id: 'nacimiento',     name: 'Nacimiento',     icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path></svg>', desc: 'Ya arranqué pero aún soy muy nuevo.' },
+  { id: 'despegue',       name: 'Despegue',        icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 3.82-13.04 1 1 0 0 1 1.14-.32 14.9 14.9 0 0 1 6.32 4.96c.55.74.55 1.76 0 2.5A21.9 21.9 0 0 1 15 12"></path><path d="m8.52 14.53.94.94c.53.53 1.13.97 1.78 1.3l.63.31c.64.32 1.34.48 2.06.48h.27c1.3-.04 2.51-.55 3.44-1.48l1.41-1.41"></path><path d="M9.93 11.21 8.52 9.8a7.27 7.27 0 0 0-1.48-3.44H6.76a4.25 4.25 0 0 0-2.05-.48h-.64c-.64-.32-1.24-.76-1.77-1.29l-.95-.95"></path><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path></svg>', desc: 'Consolidando operaciones y ventas.' },
+  { id: 'crecimiento',    name: 'Crecimiento',     icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>', desc: 'Escalando mi negocio y equipo.' },
+  { id: 'madurez',        name: 'Madurez',         icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>', desc: 'Empresa establecida, busco diversificar.' },
+];
 
-        function prevStep() {
-            if (currentStep > 1) { currentStep--; renderSteps(); }
-        }
+const LINEAS = [
+  { id: 'comercial',    name: 'Gestión Comercial',   icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>', desc: 'Ventas, mercadeo, clientes y propuesta de valor.' },
+  { id: 'gerencia',     name: 'Gerencia',             icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>', desc: 'Estrategia, finanzas e internacionalización.' },
+  { id: 'eficiencia',   name: 'Eficiencia',           icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>', desc: 'Procesos, calidad, operaciones y logística.' },
+  { id: 'talento',      name: 'Talento Humano',       icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>', desc: 'Equipo, roles y estructura organizacional.' },
+  { id: 'innovacion',   name: 'Innovación',           icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>', desc: 'Tecnología, nuevos productos y servicios.' },
+];
 
-        function goToStep(stepNumber) {
-            currentStep = stepNumber; renderSteps();
-        }
+const PREGUNTAS = {
+  comercial: [
+    {
+      id: 'C1', texto: '¿Tienes claro por qué tus clientes te eligen? (Propuesta de Valor)',
+      opciones: [
+        { texto: 'No tenemos claro el motivo por el cual los clientes nos eligen.', pct: 0 },
+        { texto: 'Tenemos una idea general, pero aún no está completamente definida.', pct: 33 },
+        { texto: 'Sí, cuento con una propuesta de valor, con oportunidad de mejora.', pct: 66 },
+        { texto: 'Sí, cuento con una propuesta de valor bien definida y alineada al mercado.', pct: 100 },
+      ]
+    },
+    {
+      id: 'C2', texto: '¿Cómo llevas el control de las ventas de tu empresa?',
+      opciones: [
+        { texto: 'No, vendo sin un proceso definido ni metas.', pct: 0 },
+        { texto: 'Tengo algunas metas de ventas, pero no hago seguimiento riguroso.', pct: 33 },
+        { texto: 'Sí. Tengo metas claras y hago seguimiento a las ventas periódicamente.', pct: 66 },
+        { texto: 'Sí. Tengo metas, hago seguimiento y capacito a mi equipo de ventas.', pct: 100 },
+      ]
+    },
+    {
+      id: 'C3', texto: '¿Cómo promocionas principalmente tus productos y/o servicios?',
+      opciones: [
+        { texto: 'Principalmente boca a boca, teléfono o presencial.', pct: 0 },
+        { texto: 'Canales tradicionales (Prensa, Radio, Volantes, etc).', pct: 33 },
+        { texto: 'Marketing digital básico (Redes sociales orgánicas, Whatsapp).', pct: 66 },
+        { texto: 'Marketing avanzado (SEO, Pauta, Chatbots, automatización).', pct: 100 },
+      ]
+    },
+    {
+      id: 'C4', texto: '¿Cómo gestionas la relación y el seguimiento de tus clientes?',
+      opciones: [
+        { texto: 'No gestiono ni hago seguimiento recurrente a mis clientes.', pct: 0 },
+        { texto: 'Los gestiono de forma básica (libreta, chat sin registro formal).', pct: 33 },
+        { texto: 'Llevo un registro organizado usando Excel u hojas de cálculo.', pct: 66 },
+        { texto: 'Utilizo un sistema especializado (CRM) que me permite analizar datos.', pct: 100 },
+      ]
+    }
+  ],
+  gerencia: [
+    {
+      id: 'G1', texto: '¿Tu empresa analiza a la competencia y su entorno para definir estrategias?',
+      opciones: [
+        { texto: 'No realizamos análisis del entorno ni de la competencia.', pct: 0 },
+        { texto: 'Sí, pero de forma informal, basados en la intuición o percepción.', pct: 33 },
+        { texto: 'Sí, realizamos análisis de mercado periódico para guiar la estrategia.', pct: 66 },
+        { texto: 'Sí, realizamos análisis sistemáticos y nos basamos en datos.', pct: 100 },
+      ]
+    },
+    {
+      id: 'G2', texto: '¿Cómo organiza y controla las finanzas de su negocio?',
+      opciones: [
+        { texto: 'No tengo claras las finanzas (mezclo dinero personal y del negocio).', pct: 0 },
+        { texto: 'Solo llevo un control básico de ingresos vs gastos diarios.', pct: 33 },
+        { texto: 'Tengo estados financieros formales y los reviso.', pct: 66 },
+        { texto: 'Tengo un plan financiero completo (proyecciones, indicadores) en uso.', pct: 100 },
+      ]
+    }
+  ],
+  eficiencia: [
+    {
+      id: 'E1', texto: '¿La empresa tiene definidos y documentados sus procesos operativos?',
+      opciones: [
+        { texto: 'No, todo está en la cabeza de los fundadores/empleados.', pct: 0 },
+        { texto: 'Hemos iniciado parcialmente la definición verbal de procesos.', pct: 33 },
+        { texto: 'Los procesos están definidos de forma general, pero faltan detalles.', pct: 66 },
+        { texto: 'Todos los procesos clave están definidos y documentados (manuales).', pct: 100 },
+      ]
+    },
+    {
+      id: 'E2', texto: '¿Cómo organizas los procesos operativos diarios en tu empresa?',
+      opciones: [
+        { texto: 'No hay organización formal, resolvemos el día a día.', pct: 0 },
+        { texto: 'A través de un libro físico, cuadernos de notas o pizarras.', pct: 33 },
+        { texto: 'Usamos herramientas digitales básicas (Excel, Drive, Trello).', pct: 66 },
+        { texto: 'Contamos con un sistema de gestión (ERP) o software especializado.', pct: 100 },
+      ]
+    }
+  ],
+  talento: [
+    {
+      id: 'T1', texto: '¿Su empresa tiene definida la estructura organizacional?',
+      opciones: [
+        { texto: 'No, todos hacemos de todo sin roles claros.', pct: 0 },
+        { texto: 'Conocemos los roles de manera intuitiva pero no hay organigrama.', pct: 33 },
+        { texto: 'Tenemos estructura definida pero cuesta respetarla en el día a día.', pct: 66 },
+        { texto: 'Está claramente definida, documentada y funciona adecuadamente.', pct: 100 },
+      ]
+    }
+  ],
+  innovacion: [
+    {
+      id: 'IN1', texto: '¿Cuenta con procesos de innovación para crear/mejorar productos?',
+      opciones: [
+        { texto: 'No, hacemos lo mismo desde el principio y no vemos necesidad.', pct: 0 },
+        { texto: 'Queremos innovar pero no sabemos cómo estructurar el proceso.', pct: 33 },
+        { texto: 'Innovamos cuando surge una idea, pero no es un hábito constante.', pct: 66 },
+        { texto: 'Sí, la innovación es parte de nuestra cultura y destinamos recursos a ello.', pct: 100 },
+      ]
+    }
+  ]
+};
 
-        // --- Función para copiar el enlace de asistencia ---
-        function copyAttendanceLink() {
-            const linkInput = document.getElementById('link-asistencia');
-            // Selecciona el texto y lo copia (compatible con iframes/móviles)
-            linkInput.select();
-            linkInput.setSelectionRange(0, 99999);
-            document.execCommand('copy');
-            
-            // Retroalimentación visual simple
-            alert('¡Enlace copiado al portapapeles!');
-        }
+// Base de herramientas sugeridas por etapa y línea
+const PLAN = {
+  descubrimiento: {
+    gerencia: [{ tema: 'Modelo de negocio', herr: 'Business Model Canvas' }],
+    comercial: [{ tema: 'Propuesta de valor', herr: 'Lienzo de propuesta de valor' }],
+    innovacion: [{ tema: 'Experimentos de validación', herr: 'Tarjeta de pruebas' }],
+    talento: [{ tema: 'Mapeo de actores clave', herr: 'Matriz de Roles inicial' }],
+    eficiencia: [{ tema: 'Procesos básicos', herr: 'Diagrama de flujo simple' }]
+  },
+  nacimiento: {
+    gerencia: [{ tema: 'Punto de equilibrio', herr: 'Plan Financiero Básico' }],
+    comercial: [{ tema: 'Construcción de marca', herr: 'Manual de Branding' }],
+    innovacion: [{ tema: 'Vigilancia de competencia', herr: 'Benchmarking' }],
+    talento: [{ tema: 'Socios y equipo', herr: 'Acuerdo de fundadores' }],
+    eficiencia: [{ tema: 'Documentación inicial', herr: 'Manual de operaciones' }]
+  },
+  despegue: {
+    comercial: [{ tema: 'Estrategia digital', herr: 'Plan de Marketing Estratégico' }],
+    eficiencia: [{ tema: 'Optimización', herr: 'Metodología Lean (5S)' }],
+    gerencia: [{ tema: 'Indicadores', herr: 'Dashboard de KPIs' }],
+    innovacion: [{ tema: 'Mejora continua', herr: 'Matriz de Hipótesis' }],
+    talento: [{ tema: 'Liderazgo', herr: 'Evaluación de desempeño' }]
+  },
+  crecimiento: {
+    comercial: [{ tema: 'Gestión de clientes', herr: 'Implementación CRM' }],
+    talento: [{ tema: 'Contratación a escala', herr: 'Políticas de RRHH' }],
+    eficiencia: [{ tema: 'Sistematización', herr: 'Evaluación de ERP' }],
+    gerencia: [{ tema: 'Proyectos de inversión', herr: 'Flujo de caja proyectado' }],
+    innovacion: [{ tema: 'Vigilancia tecnológica', herr: 'Roadmap de Producto' }]
+  },
+  madurez: {
+    comercial: [{ tema: 'Nuevos mercados', herr: 'Plan de Internacionalización' }],
+    gerencia: [{ tema: 'Gobierno corporativo', herr: 'Junta Directiva' }],
+    eficiencia: [{ tema: 'Sostenibilidad', herr: 'Certificaciones ISO' }],
+    innovacion: [{ tema: 'Gestión del cambio', herr: 'Estrategia de Transformación' }],
+    talento: [{ tema: 'Retención de talento', herr: 'Plan de carrera' }]
+  }
+};
 
-        // --- LÓGICA: Tipos de Mentoría ---
-        const mentoriasData = {
-            gerencial: { herramienta: "Matriz de Priorización Estratégica.", entregable: "Hoja de Ruta (One-Pager): Un documento de una página que define el objetivo principal del trimestre y las 3 acciones clave para lograrlo." },
-            financiera: { herramienta: "Calculadora Rápida de Punto de Equilibrio.", entregable: "Ficha de Salud Financiera: Un reporte simple que indica la cifra exacta de ventas mensuales requerida para cubrir costos y la ganancia real de su producto estrella." },
-            comercial: { herramienta: "Ficha del Avatar (Cliente Ideal).", entregable: "Perfil de Cliente: Definición clara de quién compra y un listado de 3 canales de venta prioritarios para atacarlo." },
-            operativa: { herramienta: "Identificador de Cuellos de Botella (Semáforo de Procesos).", entregable: "Diagrama de Mejora Focalizada: Identificación visual del único proceso crítico que está frenando la operación y la recomendación puntual para destrabarlo." },
-            digital: { herramienta: "Termómetro de Madurez Digital (Checklist).", entregable: "Plan de Digitalización Básica: Lista de chequeo del estado actual y recomendación de 2 herramientas digitales de implementación inmediata (ej. WhatsApp Business, Trello, etc.)." },
-            talento: { herramienta: "Mapa de Roles Clave.", entregable: "Matriz de Responsabilidades: Definición clara de las 5 funciones indelegables del líder y/o el perfil del próximo cargo a contratar." }
-        };
+const RETOS = {
+  C1: { reto: 'Falta de claridad en tu Propuesta de Valor', herr: 'Lienzo de Propuesta de Valor', insight: 'Los clientes no compran características, compran soluciones a sus problemas. Definir tu valor diferencial es el pilar de tus ventas.' },
+  C2: { reto: 'Ausencia de seguimiento comercial', herr: 'Embudo de Ventas + Metas', insight: 'Lo que no se mide no crece. Establecer metas mensuales y revisar el embudo de ventas te dará previsibilidad en tus ingresos.' },
+  C3: { reto: 'Estrategia de promoción limitada', herr: 'Plan de Marketing Digital', insight: 'Depender del boca a boca es riesgoso para crecer. Estructurar campañas digitales te permitirá escalar tu alcance de manera controlada.' },
+  C4: { reto: 'Relación con el cliente desorganizada', herr: 'Implementación de CRM básico', insight: 'Venderle a un cliente actual es más barato que conseguir uno nuevo. Centralizar tus contactos te ayuda a no perder oportunidades de recompra.' },
+  G1: { reto: 'Toma de decisiones sin datos del entorno', herr: 'Matriz DOFA y Benchmarking', insight: 'Ignorar a la competencia te deja vulnerable. Estudiar el mercado te permite anticipar tendencias y diferenciarte estratégicamente.' },
+  G2: { reto: 'Descontrol financiero operativo', herr: 'Flujo de Caja y Presupuesto', insight: 'Un negocio que vende mucho pero gasta mal, quiebra. Separar finanzas personales y llevar un flujo de caja es urgente para tu tranquilidad.' },
+  E1: { reto: 'Alta dependencia del talento (procesos no documentados)', herr: 'Mapeo de Procesos (Flujogramas)', insight: 'Si te enfermas, ¿tu empresa sigue operando igual? Documentar el "paso a paso" es el secreto para poder delegar y crecer.' },
+  E2: { reto: 'Operaciones manuales o informales', herr: 'Checklist de Herramientas Digitales', insight: 'El tiempo de tu equipo vale oro. Digitalizar la gestión operativa reduce errores, evita re-procesos y mejora el tiempo de respuesta.' },
+  T1: { reto: 'Estructura y roles confusos', herr: 'Organigrama y Manual de Funciones', insight: 'Cuando "todos hacen de todo", nadie es responsable de los resultados. Clarificar roles mejora el clima laboral y la productividad.' },
+  IN1: { reto: 'Estancamiento en la oferta de valor', herr: 'Ciclo de Experimentación Ágil', insight: 'El mercado cambia rápido. Dedicar un pequeño porcentaje de tiempo a probar nuevas ideas te protegerá de volverte irrelevante.' }
+};
 
-        function updateMentoriaInfo() {
-            const select = document.getElementById('mentoria-select');
-            const infoBox = document.getElementById('mentoria-info');
-            const herramientaSpan = document.getElementById('mentoria-herramienta');
-            const entregableSpan = document.getElementById('mentoria-entregable');
-            const selectedValue = select.value;
+// Retos Específicos para Gerencia -> Profundidad en Estrategia
+const RETOS_GERENCIA_ESTRATEGIA = {
+  descubrimiento: {
+    reto: 'Conceptualización clara del valor',
+    herr: 'Lienzo de Estrés del Valor',
+    insight: 'El emprendedor carece de una conceptualización clara de su valor. Sabe qué hace, pero no sabe qué valor real aporta, lo que le impide explicar y vender su oferta de forma persuasiva.'
+  },
+  nacimiento: {
+    reto: 'Definición de la estrategia de Fuente de Ingreso',
+    herr: 'Lienzo del Enfrentamiento de las fuentes de ingreso con la lógica de Negocio',
+    insight: 'Esto implica establecer el modelo de ingresos correcto que refleje el valor real, sea sostenible, rentable y esté alineado con el mercado y la estructura de costos.'
+  },
+  despegue: {
+    reto: 'Validación comercial en el mercado real',
+    herr: 'Lienzo de construcción de experimentos comerciales de Lean StartUp',
+    insight: 'Debes poner a prueba tu propuesta de valor y modelo de ingresos en el mercado real. Implica ejecutar validación comercial para verificar la aceptación y viabilidad.'
+  },
+  crecimiento: {
+    reto: 'Validación rigurosa de Product Market Fit',
+    herr: 'Cuadro de parámetros de Product Market Fit',
+    insight: 'Consiste en validar rigurosamente que el producto satisface una necesidad profunda y recurrente en un mercado grande. Implica: validación en demanda masiva, modelo replicable y sostenibilidad.'
+  },
+  madurez: {
+    reto: 'Identificación de oportunidades significativas',
+    herr: 'Diagrama de Venn para encontrar Sweet Spot basado en Trend Fundamental',
+    insight: 'Implica que la empresa, ya establecida y con un Product Market Fit confirmado, debe buscar nuevas vías para crecer, expandirse o diversificar de manera estratégica y rentable.'
+  }
+};
 
-            if (selectedValue && mentoriasData[selectedValue]) {
-                herramientaSpan.textContent = mentoriasData[selectedValue].herramienta;
-                entregableSpan.textContent = mentoriasData[selectedValue].entregable;
-                infoBox.classList.remove('hidden');
-            } else {
-                infoBox.classList.add('hidden');
-            }
-        }
 
-        // --- LÓGICA: Plan de Acción Dinámico (Tabla) ---
-        function addPlanRow() {
-            const tbody = document.getElementById('plan-table-body');
-            const tr = document.createElement('tr');
-            tr.className = "border-b border-gray-200 hover:bg-gray-50 transition-colors align-top";
-            tr.innerHTML = `
-                <td class="p-2"><textarea class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-y min-h-[60px]" placeholder="Ej. Aumentar prospectos..."></textarea></td>
-                <td class="p-2"><textarea class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-y min-h-[60px]" placeholder="Ej. Conseguir 50 leads..."></textarea></td>
-                <td class="p-2"><input type="text" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Ej. 100%" /></td>
-                <td class="p-2"><input type="date" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" /></td>
-                <td class="p-2"><input type="text" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Nombre" /></td>
-                <td class="p-2 text-center pt-3">
-                    <button type="button" onclick="this.closest('tr').remove()" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-1.5 rounded transition-colors mx-auto block" title="Eliminar fila">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-            lucide.createIcons();
-        }
+// ==========================================
+// 2. ESTADO DE LA APLICACIÓN (STATE)
+// ==========================================
+let state = { datos: {}, etapa: null, linea: null, subLinea: null, respuestas: {}, payloadFinal: null };
 
-        function formatPlanAction() {
-            const objetivoGeneral = document.getElementById('plan-objetivo-general').value || 'No definido';
-            const rows = document.querySelectorAll('#plan-table-body tr');
-            let roadmapData = [];
-            
-            rows.forEach((row, index) => {
-                const inputs = row.querySelectorAll('input, textarea');
-                roadmapData.push(
-                    `Tarea ${index + 1}:\n- Obj. Clave: ${inputs[0].value || 'N/A'}\n- Res. Clave: ${inputs[1].value || 'N/A'}\n- Meta: ${inputs[2].value || 'N/A'} | Fecha Límite: ${inputs[3].value || 'N/A'} | Responsable: ${inputs[4].value || 'N/A'}`
-                );
-            });
+// ==========================================
+// 3. FUNCIONES DE INTERFAZ (UI RENDER)
+// ==========================================
 
-            return `OBJETIVO GENERAL DEL PLAN:\n${objetivoGeneral}\n\nROADMAP DE IMPLEMENTACIÓN:\n${roadmapData.join('\n\n')}`;
-        }
+function initApp() {
+  renderEtapas();
+  renderLineas();
+}
 
-        // --- LÓGICA DE ENVÍO A GOOGLE APPS SCRIPT ---
+function renderEtapas() {
+  const grid = document.getElementById('etapa-grid');
+  grid.innerHTML = ETAPAS.map(e => `
+    <button class="card-option" role="radio" aria-checked="false" data-id="${e.id}" onclick="selectCard('etapa','${e.id}',this)">
+      <span class="card-icon" aria-hidden="true">${e.icon}</span>
+      <div class="card-name">${e.name}</div>
+      <div class="card-desc">${e.desc}</div>
+      <div class="card-check">✓</div>
+    </button>
+  `).join('');
+}
+
+function renderLineas() {
+  const grid = document.getElementById('linea-grid');
+  grid.innerHTML = LINEAS.map(l => `
+    <button class="card-option" role="radio" aria-checked="false" data-id="${l.id}" onclick="selectCard('linea','${l.id}',this)">
+      <span class="card-icon" aria-hidden="true">${l.icon}</span>
+      <div class="card-name">${l.name}</div>
+      <div class="card-desc">${l.desc}</div>
+      <div class="card-check">✓</div>
+    </button>
+  `).join('');
+}
+
+function renderPreguntas() {
+  const preguntas = PREGUNTAS[state.linea] || [];
+  const container = document.getElementById('questions-container');
+  
+  if (preguntas.length === 0) {
+    container.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--c-muted);">No hay preguntas disponibles para esta área todavía.</p>';
+    return;
+  }
+
+  container.innerHTML = preguntas.map((q, qi) => `
+    <div class="question-block" id="qblock-${qi}">
+      <div class="question-num">
+        <span class="q-tag">${q.id}</span>
+        Pregunta ${qi + 1} de ${preguntas.length}
+      </div>
+      <div class="question-text">${q.texto}</div>
+      <div class="options-list" role="radiogroup">
+        ${q.opciones.map((op, oi) => `
+          <button class="option-item" role="radio" aria-checked="false" onclick="selectOption('${q.id}', ${oi}, ${op.pct}, this, ${qi}, ${preguntas.length})">
+            <div class="opt-radio"></div>
+            <div class="opt-text">${op.texto}</div>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  checkStep4Ready();
+}
+
+// ==========================================
+// 4. LÓGICA DE INTERACCIÓN Y VALIDACIÓN
+// ==========================================
+
+function validateStep1() {
+  const nombre = document.getElementById('inp-nombre').value.trim();
+  const correo = document.getElementById('inp-correo').value.trim();
+  const empresa = document.getElementById('inp-empresa').value.trim();
+  const tipoPersona = document.querySelector('input[name="tipo_persona"]:checked');
+  const mentor = document.getElementById('sel-mentor').value;
+
+  const isValid = nombre !== '' && correo.includes('@') && empresa !== '' && tipoPersona !== null && mentor !== '';
+  
+  const btn = document.getElementById('btn-step1');
+  btn.disabled = !isValid;
+
+  if (isValid) {
+    state.datos = { nombre, correo, empresa, tipoPersona: tipoPersona.value, mentor };
+  }
+}
+
+function selectCard(type, id, el) {
+  const container = el.closest('.cards-grid');
+  container.querySelectorAll('.card-option').forEach(c => {
+    c.classList.remove('selected');
+    c.setAttribute('aria-checked', 'false');
+  });
+  
+  el.classList.add('selected');
+  el.setAttribute('aria-checked', 'true');
+
+  if (type === 'etapa') {
+    state.etapa = id;
+    document.getElementById('btn-step2').disabled = false;
+  } else {
+    state.linea = id;
+    document.getElementById('btn-step3').disabled = false;
+  }
+}
+
+function selectSubLinea(id, el) {
+  const container = el.closest('.cards-grid');
+  container.querySelectorAll('.card-option').forEach(c => {
+    c.classList.remove('selected');
+    c.setAttribute('aria-checked', 'false');
+  });
+  
+  el.classList.add('selected');
+  el.setAttribute('aria-checked', 'true');
+  state.subLinea = id;
+  document.getElementById('btn-step5').disabled = false;
+}
+
+function selectOption(qid, oi, pct, el, questionIndex, totalQuestions) {
+  const list = el.closest('.options-list');
+  list.querySelectorAll('.option-item').forEach(o => {
+    o.classList.remove('selected');
+    o.setAttribute('aria-checked', 'false');
+  });
+  
+  el.classList.add('selected');
+  el.setAttribute('aria-checked', 'true');
+
+  state.respuestas[qid] = { oi, pct };
+  checkStep4Ready();
+
+  if (questionIndex < totalQuestions - 1) {
+    setTimeout(() => {
+      const nextQ = document.getElementById(`qblock-${questionIndex + 1}`);
+      if(nextQ) {
+        const y = nextQ.getBoundingClientRect().top + window.scrollY - 120;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 400);
+  }
+}
+
+function checkStep4Ready() {
+  const preguntas = PREGUNTAS[state.linea] || [];
+  const respondidas = Object.keys(state.respuestas).length;
+  const btn = document.getElementById('btn-step4');
+  
+  if (respondidas >= preguntas.length && preguntas.length > 0) {
+    btn.disabled = false;
+    btn.innerHTML = state.linea === 'gerencia' ? 'Siguiente Paso' : 'Generar Diagnóstico';
+  } else {
+    btn.disabled = true;
+    btn.innerHTML = 'Responde todas para continuar';
+  }
+}
+
+function iniciarCalculo() {
+  if (state.linea === 'gerencia') {
+    goStep(5);
+  } else {
+    procesarResultados();
+  }
+}
+
+function procesarResultados() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('loading-section').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  document.getElementById('loading-title').textContent = `Analizando diagnóstico...`;
+  document.getElementById('loading-desc').textContent = `Generando tu reporte personalizado.`;
+
+  setTimeout(() => {
+    generarDiagnosticoFinal();
+  }, 1800);
+}
+
+function goStep(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  
+  const targetSection = document.getElementById('step' + n);
+  if(targetSection) targetSection.classList.add('visible');
+
+  const isGerencia = state.linea === 'gerencia';
+  const totalSteps = isGerencia ? 6 : 5;
+  const currentVisualStep = (n === 6 && !isGerencia) ? 5 : n;
+
+  document.getElementById('ps6').style.display = isGerencia ? 'block' : 'none';
+
+  const progressContainer = document.getElementById('progress-container');
+  progressContainer.setAttribute('aria-valuemax', totalSteps);
+  progressContainer.setAttribute('aria-valuenow', currentVisualStep);
+  
+  ['ps1','ps2','ps3','ps4','ps5','ps6'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('active','done');
+    if (i + 1 < currentVisualStep) el.classList.add('done');
+    else if (i + 1 === currentVisualStep) el.classList.add('active');
+  });
+  
+  let label = '';
+  if (n === 1) label = `Paso 1 de ${totalSteps}: Datos Generales`;
+  else if (n === 2) label = `Paso 2 de ${totalSteps}: Etapa Empresarial`;
+  else if (n === 3) label = `Paso 3 de ${totalSteps}: Área a Diagnosticar`;
+  else if (n === 4) label = `Paso 4 de ${totalSteps}: Profundización`;
+  else if (n === 5 && isGerencia) label = `Paso 5 de ${totalSteps}: Enfoque Gerencial`;
+  else label = `Paso ${totalSteps} de ${totalSteps}: Resultados del Diagnóstico`;
+
+  document.getElementById('progress-label').textContent = label;
+
+  if (n === 4) { 
+    state.respuestas = {}; 
+    renderPreguntas(); 
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ==========================================
+// 5. CÁLCULO DE RESULTADOS Y RESUMEN
+// ==========================================
+
+function generarDiagnosticoFinal() {
+  const preguntas = PREGUNTAS[state.linea] || [];
+  
+  let totalPct = 0;
+  let minScore = 999; 
+  let minId = null;
+
+  preguntas.forEach(q => {
+    const s = state.respuestas[q.id]?.pct ?? 0;
+    totalPct += s;
+    if (s < minScore) { 
+      minScore = s; 
+      minId = q.id; 
+    }
+  });
+
+  const score = Math.round(totalPct / preguntas.length) || 0; // Prevención de NaN
+
+  let nivelObj = { nivel: 'Nivel no definido', desc: '' };
+  if (score <= 33)  nivelObj = { nivel: 'Inicial', desc: 'Hay mucho potencial de estructuración. Enfoquémonos en las bases.' };
+  else if (score <= 66)  nivelObj = { nivel: 'En desarrollo', desc: 'Tienes buenas bases, pero necesitas estandarizar y medir mejor los procesos.' };
+  else nivelObj = { nivel: 'Avanzado', desc: 'Esta área está bien gestionada. Tu reto es la optimización continua y escala.' };
+
+  const etapaObj = ETAPAS.find(e => e.id === state.etapa);
+  const lineaObj = LINEAS.find(l => l.id === state.linea);
+  const planItems = (PLAN[state.etapa]?.[state.linea]) || [];
+
+  // Lógica de Reto Principal
+  let retoFinal = '';
+  let insightFinal = '';
+  let herrFinal = '';
+
+  const defaultRetoData = RETOS[minId] || { reto: 'Oportunidad general de mejora', herr: 'Revisión estratégica', insight: 'Analiza detalladamente las áreas con puntaje medio.' };
+
+  // --- LÓGICA DE GERENCIA ESTRATÉGICA ---
+  if (state.linea === 'gerencia' && state.subLinea === 'estrategia') {
+    const customReto = RETOS_GERENCIA_ESTRATEGIA[state.etapa];
+    if (customReto) {
+      retoFinal = customReto.reto;
+      insightFinal = customReto.insight;
+      herrFinal = customReto.herr;
+    }
+  } else {
+    retoFinal = defaultRetoData.reto;
+    insightFinal = defaultRetoData.insight;
+    herrFinal = defaultRetoData.herr;
+  }
+
+  // Textos y nombres dinámicos
+  const nombreMentor = state.datos.mentor || "tu mentor";
+  const tituloLinea = (state.linea === 'gerencia' && state.subLinea) 
+    ? (state.subLinea === 'estrategia' ? 'Gerencia Estratégica' : 'Gerencia Financiera')
+    : lineaObj.name;
+
+  // Generar resumen del estado de la unidad productiva
+  const resumenTexto = `La unidad productiva <strong>${state.datos.empresa}</strong>, representada por <strong>${state.datos.nombre}</strong> y clasificada en la etapa de <strong>${etapaObj.name}</strong>, ha completado exitosamente su diagnóstico de madurez en el área de <strong>${tituloLinea}</strong>. El análisis refleja un índice de madurez del <strong>${score}%</strong>, ubicando a la empresa en un nivel <strong>${nivelObj.nivel}</strong>. Se ha identificado que su principal reto estratégico actual es la <strong>${retoFinal.toLowerCase()}</strong>. Para superar este desafío, se recomienda implementar prioritariamente la herramienta <strong>${herrFinal}</strong>. Las siguientes sesiones de mentoría con <strong>${nombreMentor}</strong> estarán enfocadas en ejecutar estos ajustes y propulsar el crecimiento sostenible del negocio.`;
+
+  // Guardar payload para el correo (Mantenemos HTML en el resumen para negritas)
+  state.payloadFinal = {
+    nombre: state.datos.nombre,
+    correo: state.datos.correo,
+    empresa: state.datos.empresa,
+    mentor: state.datos.mentor,
+    etapa: etapaObj.name,
+    area: tituloLinea,
+    puntaje: score,
+    nivel: nivelObj.nivel,
+    reto: retoFinal,
+    herramienta: herrFinal,
+    resumen: resumenTexto 
+  };
+
+  const container = document.getElementById('result-container');
+  container.innerHTML = `
+    <div class="result-wrap">
+      <div class="section-label">Diagnóstico Completado</div>
+      <div class="section-title">Resultados de ${tituloLinea}</div>
+      <div class="section-desc">Empresa: <strong>${state.datos.empresa}</strong> | Etapa: ${etapaObj.name}</div>
+
+      <div class="result-header">
+        <div class="result-header-bg-text">${score}%</div>
+        <div class="result-badge">${nivelObj.nivel}</div>
+        <h2>${nivelObj.desc}</h2>
+        <div class="score-line">Índice de madurez: <span class="score-val">${score} / 100</span></div>
+        <div class="score-bar-row">
+          <div class="score-bar-bg">
+            <div class="score-bar-fill" id="scoreBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-cards">
         
-        // ¡LA NUEVA URL YA ESTÁ INTEGRADA AQUÍ!
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzmN1B3qy9ZQ5Y13Rs2Nh9Zze30aH1-j-G8facuxK_P-B-r9bYDMMb5mecm9YNqQEC/exec';
+        <div class="result-card summary full">
+          <div class="rc-label">📋 Resumen Ejecutivo del Estado Actual</div>
+          <p style="font-size: 15.5px; line-height: 1.8; color: var(--c-ink);">${resumenTexto}</p>
+        </div>
 
-        function getBase64(file) {
-            return new Promise((resolve, reject) => {
-                if (!file) { resolve(null); return; }
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    resolve({ name: file.name, mimeType: file.type, base64: reader.result.split(',')[1] });
-                };
-                reader.onerror = error => reject(error);
-            });
-        }
+        <div class="result-card reto full">
+          <div class="rc-label">Tu Reto Prioritario</div>
+          <h3>${retoFinal}</h3>
+          <p>${insightFinal}</p>
+        </div>
+        
+        <div class="result-card herramienta">
+          <div class="rc-label">Herramienta Sugerida</div>
+          <h3>${herrFinal}</h3>
+          <p>Implementar esta herramienta te ayudará a resolver tu reto prioritario de forma estructurada.</p>
+        </div>
+        
+        <div class="result-card insight">
+          <div class="rc-label">Foco de Acción Inmediato</div>
+          <h3>Pregunta con menor puntaje</h3>
+          <p>Obtuviste <strong>${minScore}%</strong> en el ítem "${preguntas.find(p=>p.id===minId)?.texto || 'General'}". Prioriza trabajar sobre este punto antes de avanzar al siguiente nivel.</p>
+        </div>
+        
+        ${planItems.length > 0 ? `
+        <div class="result-card temas full">
+          <div class="rc-label">Ruta Recomendada (Fase: ${etapaObj.name})</div>
+          <p style="margin-bottom: 8px;">De acuerdo a la etapa de tu empresa, te sugerimos explorar también estos temas con tu mentor(a):</p>
+          <div class="temas-grid">
+            ${planItems.map(t => `
+              <div class="tema-row">
+                <div class="tema-bullet"></div>
+                <div>
+                  <div class="tema-name">${t.tema}</div>
+                  <div class="tema-herr">Recomendado: ${t.herr}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>` : ''}
+      </div>
+    </div>
+  `;
 
-        async function submitData() {
-            const btnSubmit = document.getElementById('btn-submit');
-            
-            if (!SCRIPT_URL) {
-                alert('Atención: La URL del Script no está definida.');
-                return;
-            }
+  document.getElementById('loading-section').classList.remove('visible');
+  goStep(6);
+  
+  // Pequeño retardo (requestAnimationFrame + timeout) para asegurar que el DOM se haya renderizado antes de animar
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      const bar = document.getElementById('scoreBar');
+      if (bar) bar.style.width = score + '%';
+    }, 50);
+  });
+}
 
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Guardando...`;
-            lucide.createIcons();
+// ==========================================
+// 6. ENVIAR CORREO VIA GOOGLE APPS SCRIPT
+// ==========================================
+function enviarCorreo() {
+  const btn = document.getElementById('btn-enviar-correo');
+  btn.disabled = true;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = 'Enviando... ⏳';
 
-            try {
-                const mentoriaSelect = document.getElementById('mentoria-select');
-                const mentoriaTexto = mentoriaSelect.options[mentoriaSelect.selectedIndex].text;
+  // URL conectada y activa de Google Apps Script
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyBmFehPdgdrhdYwPCoN5bkX3EgNyQIlB_mGEBHDQBaU_6kS4Cb1GUkwxj_PzK3njDuOA/exec"; 
 
-                const data = {
-                    consultor: document.getElementById('consultor').value,
-                    programa: document.getElementById('programa').value,
-                    ciclo: document.getElementById('ciclo').value,
-                    tipoMentoria: mentoriaSelect.value ? mentoriaTexto : '',
-                    modalidad: document.getElementById('modalidad').value,
-                    fechaInicio: document.getElementById('fecha-inicio').value,
-                    fechaFin: document.getElementById('fecha-fin').value,
-                    
-                    diagnostico: document.getElementById('resultado-diagnostico').value,
-                    faseNecesidad: document.getElementById('fase-necesidad').value,
-                    faseReto: document.getElementById('fase-reto').value,
-                    faseSolucion: document.getElementById('fase-solucion').value,
-                    fasePlan: formatPlanAction(),
-                    
-                    entidad: document.getElementById('nombre-entidad').value,
-                    correoEntidad: document.getElementById('correo-entidad').value,
-                    nit: document.getElementById('nit').value,
-                    quienRecibe: document.getElementById('nombre-recibe').value,
-                    correoConsultor: document.getElementById('correo-consultor').value,
-                    otros: document.getElementById('otros-participantes').value,
-                };
+  fetch(GAS_URL, {
+    method: 'POST',
+    mode: 'no-cors', 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(state.payloadFinal)
+  })
+  .then(() => {
+    btn.innerHTML = '¡Enviado Exitosamente! ✔️';
+    btn.style.background = '#2A6B4F'; 
+  })
+  .catch(error => {
+    console.error('Error al enviar:', error);
+    btn.innerHTML = 'Error al enviar ❌';
+    btn.style.background = '#C8440A';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+      btn.style.background = 'var(--c-accent)';
+    }, 3000);
+  });
+}
 
-                data.foto = await getBase64(document.getElementById('file-foto').files[0]);
-                data.herramienta = await getBase64(document.getElementById('file-herramienta').files[0]);
-                data.plan = await getBase64(document.getElementById('file-plan').files[0]);
+function reiniciar() {
+  state = { datos: {}, etapa: null, linea: null, subLinea: null, respuestas: {}, payloadFinal: null };
+  
+  // Limpiar campos del formulario
+  document.getElementById('inp-nombre').value = '';
+  document.getElementById('inp-correo').value = '';
+  document.getElementById('inp-empresa').value = '';
+  document.getElementById('sel-mentor').value = '';
+  document.querySelectorAll('input[name="tipo_persona"]').forEach(el => el.checked = false);
+  
+  document.querySelectorAll('#enfoque-grid .card-option').forEach(c => {
+    c.classList.remove('selected');
+    c.setAttribute('aria-checked', 'false');
+  });
+  
+  const btnEnvio = document.getElementById('btn-enviar-correo');
+  if(btnEnvio) {
+    btnEnvio.disabled = false;
+    btnEnvio.innerHTML = 'Enviar Resultados al Correo ✉️';
+    btnEnvio.style.background = 'var(--c-accent)';
+  }
 
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
-                });
+  document.getElementById('btn-step5').disabled = true;
+  document.getElementById('btn-step1').disabled = true;
 
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    alert('¡Excelente! Datos y documentos guardados correctamente. Se ha enviado un correo con el PDF.');
-                } else {
-                    alert('Hubo un problema guardando los datos: ' + result.message);
-                }
+  initApp();
+  goStep(1);
+}
 
-            } catch (error) {
-                console.error(error);
-                alert('Hubo un error de red intentando enviar los datos.');
-            } finally {
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = `<span>Guardar En Firme</span> <i data-lucide="save" class="w-5 h-5 text-sky-400"></i>`;
-                lucide.createIcons();
-            }
-        }
-
-        // Inicializar filas de la tabla por defecto
-        addPlanRow();
-        addPlanRow();
-        addPlanRow();
-
-        // Renderizar inicial
-        renderSteps();
-    </script>
+// Iniciar app
+document.addEventListener("DOMContentLoaded", initApp);
+</script>
 </body>
 </html>
