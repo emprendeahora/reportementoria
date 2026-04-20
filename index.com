@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Actividad - Mentorías Ruta C</title>
+    
+    <!-- Google Fonts: Montserrat para identidad de marca -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de fuente base en Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        .animation-fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .toolbar-btn {
+            padding: 0.375rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.2s;
+        }
+        .toolbar-btn:hover { background-color: #f3f4f6; }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 p-6 flex justify-center text-gray-800">
+
+    <div class="max-w-6xl w-full">
+        
+        <!-- HEADER CORPORATIVO RUTA C -->
+        <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 bg-blue-950 p-6 rounded-xl shadow-lg border border-blue-900 relative z-20 gap-4">
+            
+            <div class="flex items-center gap-4">
+                <!-- Logo Cámara de Comercio / Ruta C -->
+                <img src="https://img.tiendasicam32.net/rutac/rutac_blanco.png" alt="Ruta C - Cámara de Comercio" class="h-12 md:h-14 object-contain" />
+                
+                <div class="hidden sm:block w-px h-10 bg-blue-800"></div>
+                
+                <div class="hidden sm:block">
+                    <p class="text-xs text-sky-300 font-bold tracking-widest uppercase flex items-center gap-1">
+                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-sky-400"></i> ACTIVA TU CRECIMIENTO
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-4 mt-2 md:mt-0">
+                <!-- Operador: Emprende Ahora -->
+                <div class="flex items-center gap-3 border-r border-blue-800 pr-4">
+                    <span class="text-[10px] text-blue-300 font-bold uppercase tracking-widest">Operado por:</span>
+                    <div class="bg-white px-2 py-1 rounded-md shadow-sm h-10 flex items-center justify-center">
+                        <img src="data:image/jpeg;base64,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" alt="Emprende Ahora" class="h-8 object-contain" />
+                    </div>
+                </div>
+                
+                <button class="flex items-center gap-2 px-4 py-2 bg-blue-900 border border-blue-800 rounded-md text-sm font-semibold text-white hover:bg-blue-800 transition-colors shadow-sm">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> <span class="hidden sm:inline">Volver al panel</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex gap-8 flex-col md:flex-row">
+            <!-- Sidebar / Stepper -->
+            <div class="w-full md:w-72 shrink-0 md:pt-2 mb-6 md:mb-0">
+                <div class="relative flex md:flex-col justify-between md:justify-start">
+                    <!-- Línea vertical de fondo -->
+                    <div class="hidden md:block absolute left-[15px] top-4 bottom-8 w-[2px] bg-gray-200 z-0"></div>
+                    
+                    <!-- Paso 1 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 md:mb-10 z-10 cursor-pointer" onclick="goToStep(1)">
+                        <div class="relative flex flex-col items-center">
+                            <div id="step-circle-1" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-4 border-sky-500 transition-colors duration-200 shadow-sm">
+                                <span id="step-number-1" class="font-bold text-sky-500 hidden"></span>
+                                <i id="step-check-1" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
+                            </div>
+                            <div id="step-line-1" class="hidden md:block absolute top-8 w-[2px] h-10 bg-blue-950 -z-10 transition-all duration-300 scale-y-0 origin-top"></div>
+                        </div>
+                        <div id="step-text-1" class="pt-1 text-center md:text-left text-gray-800 transition-colors">
+                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
+                                <span class="text-xl font-bold text-gray-700 hidden md:inline">01</span>
+                                <span class="font-semibold text-sm md:text-base">Datos y Diagnóstico</span>
+                            </div>
+                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Info general y diagnóstico</p>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 md:mb-10 z-10 cursor-pointer" onclick="goToStep(2)">
+                        <div class="relative flex flex-col items-center">
+                            <div id="step-circle-2" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200">
+                                <span id="step-number-2" class="font-bold text-sky-500 hidden"></span>
+                                <i id="step-check-2" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
+                            </div>
+                            <div id="step-line-2" class="hidden md:block absolute top-8 w-[2px] h-10 bg-blue-950 -z-10 transition-all duration-300 scale-y-0 origin-top"></div>
+                        </div>
+                        <div id="step-text-2" class="pt-1 text-center md:text-left text-gray-500 transition-colors">
+                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
+                                <span class="text-xl font-bold text-gray-400 hidden md:inline">02</span>
+                                <span class="font-semibold text-sm md:text-base">Desarrollo Metodológico</span>
+                            </div>
+                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Fases Ruta C 1:1</p>
+                        </div>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 md:mb-10 z-10 cursor-pointer" onclick="goToStep(3)">
+                        <div class="relative flex flex-col items-center">
+                            <div id="step-circle-3" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200">
+                                <span id="step-number-3" class="font-bold text-sky-500 hidden"></span>
+                                <i id="step-check-3" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
+                            </div>
+                            <div id="step-line-3" class="hidden md:block absolute top-8 w-[2px] h-10 bg-blue-950 -z-10 transition-all duration-300 scale-y-0 origin-top"></div>
+                        </div>
+                        <div id="step-text-3" class="pt-1 text-center md:text-left text-gray-500 transition-colors">
+                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
+                                <span class="text-xl font-bold text-gray-400 hidden md:inline">03</span>
+                                <span class="font-semibold text-sm md:text-base">Unidades intervenidas</span>
+                            </div>
+                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Información de la UP</p>
+                        </div>
+                    </div>
+
+                    <!-- Paso 4 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-4 z-10 cursor-pointer" onclick="goToStep(4)">
+                        <div class="relative flex flex-col items-center">
+                            <div id="step-circle-4" class="w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200">
+                                <span id="step-number-4" class="font-bold text-sky-500 hidden"></span>
+                                <i id="step-check-4" data-lucide="check" class="w-4 h-4 text-white hidden"></i>
+                            </div>
+                        </div>
+                        <div id="step-text-4" class="pt-1 text-center md:text-left text-gray-500 transition-colors">
+                            <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
+                                <span class="text-xl font-bold text-gray-400 hidden md:inline">04</span>
+                                <span class="font-semibold text-sm md:text-base">Soportes</span>
+                            </div>
+                            <p class="text-xs md:text-sm text-gray-400 mt-1 md:ml-8 hidden md:block">Evidencias y documentos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido Principal -->
+            <div class="flex-1 bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 overflow-hidden relative">
+                
+                <!-- Controles de Navegación Superiores -->
+                <div class="flex justify-between items-center pb-6 border-b border-gray-100 mb-6">
+                    <button id="btn-prev" onclick="prevStep()" class="px-6 py-2 rounded-md font-semibold transition-colors border border-gray-200 text-gray-400 cursor-not-allowed bg-white" disabled>
+                        Anterior
+                    </button>
+                    
+                    <button id="btn-next" onclick="nextStep()" class="px-6 py-2 rounded-md font-semibold bg-sky-500 text-white hover:bg-sky-600 shadow-sm transition-colors">
+                        Siguiente
+                    </button>
+                </div>
+
+                <!-- CONTENEDORES DE PASOS -->
+
+                <!-- PASO 1: Datos y Diagnóstico -->
+                <div id="step-content-1" class="space-y-6 animation-fade-in block">
+                    <!-- Fila 1: Consultor, Correo Consultor, Programa, Ciclo -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Consultor</label>
+                            <select id="consultor" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
+                                <option value="">Seleccione un consultor...</option>
+                                <option>Óscar Solano</option>
+                                <option>Jeannie Salinas</option>
+                                <option>Alexandra Martínez</option>
+                                <option>Andrés Arévalo</option>
+                                <option>Carolina Zabala</option>
+                                <option>Maira Mendivil</option>
+                                <option>Jorge Murillo</option>
+                                <option>Iván Bastidas</option>
+                                <option>María José Sierra</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Correo del Consultor</label>
+                            <input id="correo-consultor" type="email" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="mentor@rutac.com" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Programa</label>
+                            <select id="programa" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
+                                <option>Mentorías Ruta C</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Ciclo</label>
+                            <select id="ciclo" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
+                                <option>Convocatoria 2026</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Fila 2: Tipo de Mentoría -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Tipo de mentoría</label>
+                        <select id="mentoria-select" onchange="updateMentoriaInfo()" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
+                            <option value="">Seleccione el tipo de mentoría...</option>
+                            <option value="gerencial">Gestión Gerencial (Estrategia, finanzas)</option>
+                            <option value="comercial">Comercial (Marketing, ventas)</option>
+                            <option value="operativa">Eficiencia (Procesos)</option>
+                            <option value="digital">Innovación (Tecnología y Desarrollo)</option>
+                            <option value="talento">Talento Humano (Liderazgo Organizacional)</option>
+                        </select>
+                        
+                        <!-- Caja de Información Dinámica (Herramienta y Entregable) -->
+                        <div id="mentoria-info" class="hidden mt-3 p-4 bg-sky-50 rounded-md border border-sky-200 text-sm transition-all duration-300">
+                            <p class="text-sky-900 mb-2"><span class="font-bold">Herramienta:</span> <span id="mentoria-herramienta"></span></p>
+                            <p class="text-sky-900"><span class="font-bold">Entregable:</span> <span id="mentoria-entregable"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Fila 3: Modalidad, Fecha Inicio, Fecha Fin -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Modalidad</label>
+                            <select id="modalidad" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm">
+                                <option>Virtual</option>
+                                <option>Presencial</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Fecha inicio</label>
+                            <input id="fecha-inicio" type="datetime-local" value="2026-04-13T16:15" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Fecha fin</label>
+                            <input id="fecha-fin" type="datetime-local" value="2026-04-13T17:15" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" />
+                        </div>
+                    </div>
+
+                    <!-- Fila 4: Diagnóstico -->
+                    <div class="border-t border-gray-200 pt-6 mt-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-blue-950 flex items-center gap-2">
+                                <i data-lucide="clipboard-list" class="w-5 h-5 text-sky-500"></i>
+                                Diagnóstico Inicial
+                            </h3>
+                            <!-- Botón Link al Diagnóstico -->
+                            <a href="https://emprendeahora.github.io/diagnostico.rutac/" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-sky-50 text-sky-700 hover:bg-sky-100 font-semibold rounded-md transition-colors text-sm border border-sky-200 shadow-sm">
+                                Llenar Diagnóstico UP <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                        
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Resultado del Diagnóstico (Consolidado)</label>
+                        <p class="text-xs text-gray-500 font-medium mb-2">Pegue aquí la información relevante o el resultado generado tras realizar el diagnóstico con el formulario externo.</p>
+                        
+                        <div class="border border-gray-300 rounded-md overflow-hidden bg-white focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-shadow shadow-sm">
+                            <textarea id="resultado-diagnostico" class="w-full p-4 outline-none resize-y text-gray-700 h-32" placeholder="Describa o pegue los resultados del diagnóstico inicial aquí..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 2: Desarrollo Metodológico -->
+                <div id="step-content-2" class="space-y-6 animation-fade-in hidden">
+                    
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-blue-950">Metodología Mentorías Ruta C 1:1</h2>
+                        <p class="text-gray-500 mt-1">Siga la estructura de 2 horas para garantizar la trazabilidad de la intervención.</p>
+                    </div>
+
+                    <!-- Fase 1: Identificación de la necesidad -->
+                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <div class="bg-blue-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-950 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                                <div>
+                                    <h4 class="font-bold text-blue-950">Identificación de la necesidad (Diagnóstico)</h4>
+                                    <p class="text-xs text-blue-800">Objetivo: Comprender la situación actual del negocio</p>
+                                </div>
+                            </div>
+                            <span class="flex items-center gap-1 text-sm font-semibold text-blue-900 bg-white px-3 py-1 rounded-full border border-blue-200 shadow-sm">
+                                <i data-lucide="clock" class="w-4 h-4"></i> 20 min
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-sm text-gray-600 mb-3">Aplique las preguntas clave por área e identifique las brechas y prioridades.</p>
+                            <textarea id="fase-necesidad" class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-sky-500 text-sm h-24" placeholder="Describa la situación actual y hallazgos principales..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Fase 2: Definición del reto -->
+                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <div class="bg-blue-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-950 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                                <div>
+                                    <h4 class="font-bold text-blue-950">Definición del reto</h4>
+                                    <p class="text-xs text-blue-800">Objetivo: Establecer un reto claro y medible</p>
+                                </div>
+                            </div>
+                            <span class="flex items-center gap-1 text-sm font-semibold text-blue-900 bg-white px-3 py-1 rounded-full border border-blue-200 shadow-sm">
+                                <i data-lucide="clock" class="w-4 h-4"></i> 20 min
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-sm text-gray-600 mb-3">Analice el problema central que impacta el crecimiento y formule el reto alineado con el área de intervención.</p>
+                            <textarea id="fase-reto" class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-sky-500 text-sm h-24" placeholder="Describa el reto principal definido..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Fase 3: Definición de la solución -->
+                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <div class="bg-blue-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-950 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                                <div>
+                                    <h4 class="font-bold text-blue-950">Definición de la solución</h4>
+                                    <p class="text-xs text-blue-800">Objetivo: Diseñar una solución viable</p>
+                                </div>
+                            </div>
+                            <span class="flex items-center gap-1 text-sm font-semibold text-blue-900 bg-white px-3 py-1 rounded-full border border-blue-200 shadow-sm">
+                                <i data-lucide="clock" class="w-4 h-4"></i> 20 min
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-sm text-gray-600 mb-3">Evalúe alternativas y seleccione la mejor solución según la realidad del negocio. Defina el entregable.</p>
+                            <textarea id="fase-solucion" class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-sky-500 text-sm h-24" placeholder="Detalle la solución seleccionada y su justificación..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Fase 4: Plan de acción y roadmap -->
+                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden border-l-4 border-l-sky-500">
+                        <div class="bg-sky-50 border-b border-gray-200 px-5 py-3 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-sky-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</div>
+                                <div>
+                                    <h4 class="font-bold text-sky-900">Plan de acción y roadmap</h4>
+                                    <p class="text-xs text-sky-700">Objetivo: Convertir la solución en acciones concretas</p>
+                                </div>
+                            </div>
+                            <span class="flex items-center gap-1 text-sm font-bold text-sky-700 bg-white px-3 py-1 rounded-full border border-sky-200 shadow-sm">
+                                <i data-lucide="clock" class="w-4 h-4"></i> 60 min
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-sm text-gray-600 mb-3">Desarrollo del entregable práctico y construcción del roadmap (acciones, responsables, tiempos).</p>
+                            
+                            <!-- ESTRUCTURA DEL PLAN DE ACCIÓN (TABLA) -->
+                            <div class="space-y-4 mt-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1">1. Objetivo General del Plan</label>
+                                    <input type="text" id="plan-objetivo-general" class="w-full border border-gray-300 rounded-md p-3 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm text-sm" placeholder="Defina el objetivo general que se persigue con esta herramienta..." />
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="block text-sm font-semibold text-gray-700">2. Roadmap de Implementación (Tareas)</label>
+                                        <button type="button" onclick="addPlanRow()" class="flex items-center gap-1 text-xs bg-sky-100 text-sky-700 hover:bg-sky-200 px-3 py-1.5 rounded-md font-bold transition-colors border border-sky-200">
+                                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Agregar fila
+                                        </button>
+                                    </div>
+                                    <div class="overflow-x-auto border border-gray-300 rounded-md shadow-sm">
+                                        <table class="w-full text-left border-collapse min-w-[800px]" id="plan-table">
+                                            <thead>
+                                                <tr class="bg-gray-50 text-xs text-gray-700 border-b border-gray-300 uppercase tracking-wide">
+                                                    <th class="p-3 font-bold w-1/4">Objetivos Claves</th>
+                                                    <th class="p-3 font-bold w-1/4">Resultados Claves</th>
+                                                    <th class="p-3 font-bold w-[12%]">Meta</th>
+                                                    <th class="p-3 font-bold w-[15%]">Fecha Límite</th>
+                                                    <th class="p-3 font-bold w-[18%]">Responsables</th>
+                                                    <th class="p-3 font-bold w-[5%] text-center">Acción</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="plan-table-body" class="text-sm">
+                                                <!-- Las filas se inyectan mediante JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- PASO 3: Unidades Intervenidas -->
+                <div id="step-content-3" class="space-y-8 animation-fade-in hidden">
+                    <h2 class="text-2xl font-bold text-blue-950">Datos de la Unidad Intervenida</h2>
+                    
+                    <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Nombre Entidad -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre de la Entidad Intervenida</label>
+                                <input id="nombre-entidad" type="text" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="Ej. Mi Empresa S.A.S." />
+                            </div>
+                            
+                            <!-- NIT / CC -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">NIT / CC</label>
+                                <input id="nit" type="text" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="Ej. 900.123.456-7" />
+                            </div>
+                            
+                            <!-- Quien recibe la mentoría -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre completo de quien recibe la mentoría</label>
+                                <input id="nombre-recibe" type="text" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="Nombres y apellidos completos" />
+                            </div>
+
+                            <!-- Correo de la UP -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico de la Unidad Productiva (UP)</label>
+                                <input id="correo-entidad" type="email" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm" placeholder="empresa@correo.com" />
+                            </div>
+                            
+                            <!-- Otros participantes -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Otros participantes en el espacio (Opcional)</label>
+                                <textarea id="otros-participantes" class="w-full border border-gray-300 rounded-md p-3 text-gray-700 focus:ring-sky-500 focus:border-sky-500 outline-none transition-colors shadow-sm resize-y h-24" placeholder="Ingrese el nombre y cargo de otras personas presentes en la sesión..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 4: Soportes -->
+                <div id="step-content-4" class="space-y-6 animation-fade-in hidden pb-16">
+                    <div class="mb-4">
+                        <h2 class="text-2xl font-bold text-blue-950">Soportes de la Mentoría</h2>
+                        <p class="text-gray-500 text-sm mt-1">Fase 5: Informe de intervención y cargue de evidencias para garantizar la trazabilidad.</p>
+                    </div>
+
+                    <!-- Soporte 1 -->
+                    <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm">
+                        <label class="block text-sm font-bold text-gray-800 mb-1">1. Fotografía del espacio</label>
+                        <p class="text-xs text-gray-500 font-medium mb-3">Imagen del espacio donde se vean claramente las caras de las personas.</p>
+                        <div class="flex">
+                            <label class="bg-gray-50 border border-gray-300 border-r-0 rounded-l-md px-4 py-3 text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors font-medium">
+                                <span>Seleccionar archivo</span>
+                                <input id="file-foto" type="file" class="hidden" accept="image/*" onchange="document.getElementById('name-foto').textContent = this.files[0] ? this.files[0].name : 'Sin archivos seleccionados'" />
+                            </label>
+                            <div id="name-foto" class="flex-1 border border-gray-300 rounded-r-md px-4 py-3 text-gray-500 bg-white truncate">
+                                Sin archivos seleccionados
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soporte 2 -->
+                    <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm">
+                        <label class="block text-sm font-bold text-gray-800 mb-1">2. Herramienta trabajada</label>
+                        <p class="text-xs text-gray-500 font-medium mb-3">Documento o evidencia de la herramienta que se trabajó en el espacio.</p>
+                        <div class="flex">
+                            <label class="bg-gray-50 border border-gray-300 border-r-0 rounded-l-md px-4 py-3 text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors font-medium">
+                                <span>Seleccionar archivo</span>
+                                <input id="file-herramienta" type="file" class="hidden" onchange="document.getElementById('name-herramienta').textContent = this.files[0] ? this.files[0].name : 'Sin archivos seleccionados'" />
+                            </label>
+                            <div id="name-herramienta" class="flex-1 border border-gray-300 rounded-r-md px-4 py-3 text-gray-500 bg-white truncate">
+                                Sin archivos seleccionados
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soporte 3 -->
+                    <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm">
+                        <label class="block text-sm font-bold text-gray-800 mb-1">3. Plan de trabajo</label>
+                        <p class="text-xs text-gray-500 font-medium mb-3">Documento del plan de trabajo estructurado para ayudar al empresario.</p>
+                        <div class="flex">
+                            <label class="bg-gray-50 border border-gray-300 border-r-0 rounded-l-md px-4 py-3 text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors font-medium">
+                                <span>Seleccionar archivo</span>
+                                <input id="file-plan" type="file" class="hidden" onchange="document.getElementById('name-plan').textContent = this.files[0] ? this.files[0].name : 'Sin archivos seleccionados'" />
+                            </label>
+                            <div id="name-plan" class="flex-1 border border-gray-300 rounded-r-md px-4 py-3 text-gray-500 bg-white truncate">
+                                Sin archivos seleccionados
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BOTONES DE ACCIÓN FINALES (Solo visibles en paso 4) -->
+        <div id="final-buttons" class="flex flex-wrap justify-center gap-4 mt-8 animation-fade-in hidden">
+            <button class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-md shadow-sm transition-colors">
+                <i data-lucide="arrow-left" class="w-[18px] h-[18px] rotate-180" style="transform: rotate(180deg) scaleX(-1);"></i> Cancelar
+            </button>
+            <button class="px-6 py-3 bg-blue-100 text-blue-800 hover:bg-blue-200 font-semibold rounded-md shadow-sm transition-colors">
+                Guardar Borrador
+            </button>
+            <button id="btn-submit" onclick="submitData()" class="px-8 py-3 bg-blue-950 hover:bg-blue-900 text-white font-bold rounded-md shadow-md transition-colors flex items-center gap-2 border border-blue-800">
+                <span>Guardar En Firme</span>
+                <i data-lucide="save" class="w-5 h-5 text-sky-400"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Inicializar Iconos
+        lucide.createIcons();
+
+        // Lógica del Formulario Multipaso
+        const totalSteps = 4;
+        let currentStep = 1;
+
+        function renderSteps() {
+            for (let i = 1; i <= totalSteps; i++) {
+                const circle = document.getElementById(`step-circle-${i}`);
+                const textContainer = document.getElementById(`step-text-${i}`);
+                const checkIcon = document.getElementById(`step-check-${i}`);
+                const titleSpan = textContainer.querySelectorAll('span')[1];
+                const line = document.getElementById(`step-line-${i}`);
+
+                if (i < currentStep) {
+                    circle.className = "w-8 h-8 rounded-full flex items-center justify-center bg-blue-950 border-2 border-blue-950 transition-colors duration-200 shadow-sm";
+                    checkIcon.classList.remove('hidden');
+                    titleSpan.className = "font-bold text-sm md:text-base text-gray-800";
+                    if(line) { line.classList.remove('scale-y-0'); line.classList.add('scale-y-100'); }
+                } else if (i === currentStep) {
+                    circle.className = "w-8 h-8 rounded-full flex items-center justify-center bg-white border-4 border-sky-500 transition-colors duration-200 shadow-md";
+                    checkIcon.classList.add('hidden');
+                    titleSpan.className = "font-bold text-sm md:text-base text-sky-600";
+                    if(line) { line.classList.remove('scale-y-100'); line.classList.add('scale-y-0'); }
+                } else {
+                    circle.className = "w-8 h-8 rounded-full flex items-center justify-center bg-white border-2 border-gray-300 transition-colors duration-200";
+                    checkIcon.classList.add('hidden');
+                    titleSpan.className = "font-semibold text-sm md:text-base text-gray-400";
+                    if(line) { line.classList.remove('scale-y-100'); line.classList.add('scale-y-0'); }
+                }
+            }
+
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step-content-${i}`).classList.add('hidden');
+                document.getElementById(`step-content-${i}`).classList.remove('block');
+            }
+            document.getElementById(`step-content-${currentStep}`).classList.remove('hidden');
+            document.getElementById(`step-content-${currentStep}`).classList.add('block');
+
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const finalButtons = document.getElementById('final-buttons');
+
+            if (currentStep === 1) {
+                btnPrev.disabled = true;
+                btnPrev.className = "px-6 py-2 rounded-md font-semibold transition-colors border border-gray-200 text-gray-400 cursor-not-allowed bg-white";
+            } else {
+                btnPrev.disabled = false;
+                btnPrev.className = "px-6 py-2 rounded-md font-semibold transition-colors border border-gray-300 text-gray-700 hover:bg-gray-50 bg-white shadow-sm";
+            }
+
+            if (currentStep === totalSteps) {
+                btnNext.className = "px-6 py-2 rounded-md font-semibold bg-sky-300 text-white cursor-default";
+                finalButtons.classList.remove('hidden');
+            } else {
+                btnNext.className = "px-6 py-2 rounded-md font-semibold bg-sky-500 text-white hover:bg-sky-600 shadow-sm transition-colors cursor-pointer";
+                finalButtons.classList.add('hidden');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) { currentStep++; renderSteps(); }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) { currentStep--; renderSteps(); }
+        }
+
+        function goToStep(stepNumber) {
+            currentStep = stepNumber; renderSteps();
+        }
+
+        // --- LÓGICA: Tipos de Mentoría ---
+        const mentoriasData = {
+            gerencial: { herramienta: "Matriz de Priorización Estratégica.", entregable: "Hoja de Ruta (One-Pager): Un documento de una página que define el objetivo principal del trimestre y las 3 acciones clave para lograrlo." },
+            financiera: { herramienta: "Calculadora Rápida de Punto de Equilibrio.", entregable: "Ficha de Salud Financiera: Un reporte simple que indica la cifra exacta de ventas mensuales requerida para cubrir costos y la ganancia real de su producto estrella." },
+            comercial: { herramienta: "Ficha del Avatar (Cliente Ideal).", entregable: "Perfil de Cliente: Definición clara de quién compra y un listado de 3 canales de venta prioritarios para atacarlo." },
+            operativa: { herramienta: "Identificador de Cuellos de Botella (Semáforo de Procesos).", entregable: "Diagrama de Mejora Focalizada: Identificación visual del único proceso crítico que está frenando la operación y la recomendación puntual para destrabarlo." },
+            digital: { herramienta: "Termómetro de Madurez Digital (Checklist).", entregable: "Plan de Digitalización Básica: Lista de chequeo del estado actual y recomendación de 2 herramientas digitales de implementación inmediata (ej. WhatsApp Business, Trello, etc.)." },
+            talento: { herramienta: "Mapa de Roles Clave.", entregable: "Matriz de Responsabilidades: Definición clara de las 5 funciones indelegables del líder y/o el perfil del próximo cargo a contratar." }
+        };
+
+        function updateMentoriaInfo() {
+            const select = document.getElementById('mentoria-select');
+            const infoBox = document.getElementById('mentoria-info');
+            const herramientaSpan = document.getElementById('mentoria-herramienta');
+            const entregableSpan = document.getElementById('mentoria-entregable');
+            const selectedValue = select.value;
+
+            if (selectedValue && mentoriasData[selectedValue]) {
+                herramientaSpan.textContent = mentoriasData[selectedValue].herramienta;
+                entregableSpan.textContent = mentoriasData[selectedValue].entregable;
+                infoBox.classList.remove('hidden');
+            } else {
+                infoBox.classList.add('hidden');
+            }
+        }
+
+        // --- LÓGICA: Plan de Acción Dinámico (Tabla) ---
+        function addPlanRow() {
+            const tbody = document.getElementById('plan-table-body');
+            const tr = document.createElement('tr');
+            tr.className = "border-b border-gray-200 hover:bg-gray-50 transition-colors align-top";
+            tr.innerHTML = `
+                <td class="p-2"><textarea class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-y min-h-[60px]" placeholder="Ej. Aumentar prospectos..."></textarea></td>
+                <td class="p-2"><textarea class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-y min-h-[60px]" placeholder="Ej. Conseguir 50 leads..."></textarea></td>
+                <td class="p-2"><input type="text" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Ej. 100%" /></td>
+                <td class="p-2"><input type="date" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" /></td>
+                <td class="p-2"><input type="text" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Nombre" /></td>
+                <td class="p-2 text-center pt-3">
+                    <button type="button" onclick="this.closest('tr').remove()" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-1.5 rounded transition-colors mx-auto block" title="Eliminar fila">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+            lucide.createIcons();
+        }
+
+        function formatPlanAction() {
+            const objetivoGeneral = document.getElementById('plan-objetivo-general').value || 'No definido';
+            const rows = document.querySelectorAll('#plan-table-body tr');
+            let roadmapData = [];
+            
+            rows.forEach((row, index) => {
+                const inputs = row.querySelectorAll('input, textarea');
+                roadmapData.push(
+                    `Tarea ${index + 1}:\n- Obj. Clave: ${inputs[0].value || 'N/A'}\n- Res. Clave: ${inputs[1].value || 'N/A'}\n- Meta: ${inputs[2].value || 'N/A'} | Fecha Límite: ${inputs[3].value || 'N/A'} | Responsable: ${inputs[4].value || 'N/A'}`
+                );
+            });
+
+            return `OBJETIVO GENERAL DEL PLAN:\n${objetivoGeneral}\n\nROADMAP DE IMPLEMENTACIÓN:\n${roadmapData.join('\n\n')}`;
+        }
+
+        // --- LÓGICA DE ENVÍO A GOOGLE APPS SCRIPT ---
+        
+        // ¡LA NUEVA URL YA ESTÁ INTEGRADA AQUÍ!
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzmN1B3qy9ZQ5Y13Rs2Nh9Zze30aH1-j-G8facuxK_P-B-r9bYDMMb5mecm9YNqQEC/exec';
+
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) { resolve(null); return; }
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    resolve({ name: file.name, mimeType: file.type, base64: reader.result.split(',')[1] });
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function submitData() {
+            const btnSubmit = document.getElementById('btn-submit');
+            
+            if (!SCRIPT_URL) {
+                alert('Atención: La URL del Script no está definida.');
+                return;
+            }
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Guardando...`;
+            lucide.createIcons();
+
+            try {
+                const mentoriaSelect = document.getElementById('mentoria-select');
+                const mentoriaTexto = mentoriaSelect.options[mentoriaSelect.selectedIndex].text;
+
+                const data = {
+                    consultor: document.getElementById('consultor').value,
+                    programa: document.getElementById('programa').value,
+                    ciclo: document.getElementById('ciclo').value,
+                    tipoMentoria: mentoriaSelect.value ? mentoriaTexto : '',
+                    modalidad: document.getElementById('modalidad').value,
+                    fechaInicio: document.getElementById('fecha-inicio').value,
+                    fechaFin: document.getElementById('fecha-fin').value,
+                    
+                    diagnostico: document.getElementById('resultado-diagnostico').value,
+                    faseNecesidad: document.getElementById('fase-necesidad').value,
+                    faseReto: document.getElementById('fase-reto').value,
+                    faseSolucion: document.getElementById('fase-solucion').value,
+                    fasePlan: formatPlanAction(),
+                    
+                    entidad: document.getElementById('nombre-entidad').value,
+                    correoEntidad: document.getElementById('correo-entidad').value,
+                    nit: document.getElementById('nit').value,
+                    quienRecibe: document.getElementById('nombre-recibe').value,
+                    correoConsultor: document.getElementById('correo-consultor').value,
+                    otros: document.getElementById('otros-participantes').value,
+                };
+
+                data.foto = await getBase64(document.getElementById('file-foto').files[0]);
+                data.herramienta = await getBase64(document.getElementById('file-herramienta').files[0]);
+                data.plan = await getBase64(document.getElementById('file-plan').files[0]);
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert('¡Excelente! Datos y documentos guardados correctamente. Se ha enviado un correo con el PDF.');
+                } else {
+                    alert('Hubo un problema guardando los datos: ' + result.message);
+                }
+
+            } catch (error) {
+                console.error(error);
+                alert('Hubo un error de red intentando enviar los datos.');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = `<span>Guardar En Firme</span> <i data-lucide="save" class="w-5 h-5 text-sky-400"></i>`;
+                lucide.createIcons();
+            }
+        }
+
+        // Inicializar filas de la tabla por defecto
+        addPlanRow();
+        addPlanRow();
+        addPlanRow();
+
+        // Renderizar inicial
+        renderSteps();
+    </script>
+</body>
+</html>
