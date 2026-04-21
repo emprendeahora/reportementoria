@@ -163,20 +163,39 @@
                     <!-- PASO 1: Datos y Diagnóstico -->
                     <div id="step-content-1" class="space-y-6 animation-fade-in block">
                         
-                        <!-- BASE DE DATOS / CONSULTA INICIAL -->
-                        <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl mb-6 shadow-sm flex items-start md:items-center justify-between flex-col md:flex-row gap-4">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-blue-100 p-2 rounded-full">
-                                    <i data-lucide="database" class="w-6 h-6 text-blue-700"></i>
+                        <!-- BASE DE DATOS / CONSULTA INICIAL Y DIAGNÓSTICO -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <!-- BASE DE DATOS -->
+                            <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl shadow-sm flex flex-col justify-between h-full gap-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="bg-blue-100 p-2 rounded-full shrink-0">
+                                        <i data-lucide="database" class="w-6 h-6 text-blue-700"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-blue-950">1. Base de Datos de U.P.</h3>
+                                        <p class="text-sm text-blue-800 mt-1">Revisa la información detallada de la Unidad Productiva antes de iniciar el reporte.</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 class="font-bold text-blue-950">Consulta la Base de Datos de U.P.</h3>
-                                    <p class="text-sm text-blue-800">Revisa la información detallada de la Unidad Productiva antes de iniciar el reporte.</p>
-                                </div>
+                                <a href="https://docs.google.com/spreadsheets/d/1Ip5rBvDX3IhwnBLkJQtWJPhNX9JLJt1Y0fjhJxIggWY/edit?usp=sharing" target="_blank" class="w-full text-center bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                                    Abrir Base de Datos <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
                             </div>
-                            <a href="https://docs.google.com/spreadsheets/d/1Ip5rBvDX3IhwnBLkJQtWJPhNX9JLJt1Y0fjhJxIggWY/edit?usp=sharing" target="_blank" class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md text-sm font-semibold transition-colors flex items-center gap-2 shadow-sm whitespace-nowrap">
-                                Abrir Base de Datos <i data-lucide="external-link" class="w-4 h-4"></i>
-                            </a>
+
+                            <!-- DIAGNÓSTICO PREVIO -->
+                            <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl shadow-sm flex flex-col justify-between h-full gap-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="bg-sky-100 p-2 rounded-full shrink-0">
+                                        <i data-lucide="clipboard-list" class="w-6 h-6 text-sky-700"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-sky-950">2. Diagnóstico Inicial</h3>
+                                        <p class="text-sm text-sky-800 mt-1">Aplica el diagnóstico a la empresa antes de avanzar con la mentoría.</p>
+                                    </div>
+                                </div>
+                                <a href="https://emprendeahora.github.io/diagnostico.rutac/" target="_blank" class="w-full text-center bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                                    Aplicar Diagnóstico <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- Fila 1: Consultor, Correo Consultor, Programa, Ciclo -->
@@ -500,6 +519,33 @@
 
     </div>
 
+    <!-- Success Modal Popup -->
+    <div id="success-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/60 backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 md:p-8 relative animation-fade-in text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-white shadow-sm">
+                <i data-lucide="check-circle" class="w-8 h-8 text-green-600"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-blue-950 mb-2">¡Reporte Enviado con Éxito!</h2>
+            <p class="text-gray-600 mb-6">Los datos se han guardado en Drive y el correo de confirmación ha sido enviado a la Unidad Productiva.</p>
+            
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 text-left">
+                <h4 class="font-bold text-amber-800 flex items-center gap-2 mb-2">
+                    <i data-lucide="alert-triangle" class="w-5 h-5"></i> ¡Atención Mentor!
+                </h4>
+                <p class="text-sm text-amber-700 mb-3 leading-relaxed">
+                    Por favor, accede a la carpeta de Drive para verificar que los documentos, evidencias y el PDF del reporte llegaron correctamente. <strong>No cierres esta pestaña aún</strong> por si necesitas hacer algún ajuste o reenviar algo.
+                </p>
+                <a href="https://drive.google.com/drive/folders/14jk6-ZLfdlRCObeooXEEhRDW8uzedGi5?usp=sharing" target="_blank" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors w-full justify-center shadow-sm">
+                    <i data-lucide="folder-open" class="w-5 h-5"></i> Verificar Carpeta en Drive
+                </a>
+            </div>
+
+            <button onclick="closeSuccessModal()" class="text-gray-500 hover:text-gray-800 font-semibold underline text-sm transition-colors">
+                Entendido, mantendré la pestaña abierta
+            </button>
+        </div>
+    </div>
+
     <script>
         // Inicializar Iconos
         lucide.createIcons();
@@ -588,6 +634,20 @@
             
             // Retroalimentación visual simple
             alert('¡Enlace copiado al portapapeles!');
+        }
+
+        // --- Funciones del Modal de Éxito ---
+        function showSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons(); // Recarga los iconos por si acaso
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
         // --- LÓGICA: Plan de Acción Dinámico (Tabla) ---
@@ -706,7 +766,7 @@
                 }
                 
                 if (result.status === 'success') {
-                    alert('¡Excelente! Datos guardados en Drive y correo de confirmación enviado a la Unidad Productiva.');
+                    showSuccessModal();
                 } else {
                     alert('Hubo un problema guardando los datos: ' + result.message);
                 }
